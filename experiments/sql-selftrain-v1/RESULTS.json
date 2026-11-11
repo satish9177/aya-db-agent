@@ -1,0 +1,155 @@
+{
+  "arms": {
+    "b": {
+      "job_id": "6af2d8baab34849891aae46b",
+      "running_seconds": 8921.1,
+      "cost_usd": 0.9913,
+      "step_seconds": {
+        "train-b": 2787.8,
+        "dev-b-nf4": 6037.8
+      },
+      "train_loss_mean": 0.021183327259495854,
+      "trainer_runtime_seconds": 2713.295591436,
+      "ledger": {
+        "optimizer_steps": 40,
+        "skipped_optimizer_steps": 0,
+        "microbatches": 612,
+        "input_tokens": 1073644,
+        "target_tokens": 99434,
+        "padded_tokens": 0,
+        "example_visits": 612,
+        "last_global_step": 40
+      },
+      "strict": 40,
+      "fallback": 40,
+      "set": 42,
+      "peak_gib": {
+        "train": 7.8,
+        "dev": 5.46
+      },
+      "checks": {
+        "completed_exit_0": true,
+        "account_and_sha": true,
+        "references_before_model": true,
+        "fresh_encoding_matches_frozen_match": true,
+        "40_updates_none_skipped": true,
+        "memory_event_every_update": true,
+        "exact_reload_of_final_adapter": true,
+        "95_dev_one_finite_position": true,
+        "auditkit_agrees": true,
+        "no_oom": true
+      }
+    },
+    "aplus": {
+      "job_id": "6af2d8d2ab34849891aae4c0",
+      "running_seconds": 8550.1,
+      "cost_usd": 0.9501,
+      "step_seconds": {
+        "train-aplus": 2842.3,
+        "dev-aplus-nf4": 5609.3
+      },
+      "train_loss_mean": 0.036221139086410406,
+      "trainer_runtime_seconds": 2771.697168477,
+      "ledger": {
+        "optimizer_steps": 40,
+        "skipped_optimizer_steps": 0,
+        "microbatches": 612,
+        "input_tokens": 1087980,
+        "target_tokens": 99434,
+        "padded_tokens": 0,
+        "example_visits": 612,
+        "last_global_step": 40
+      },
+      "strict": 36,
+      "fallback": 36,
+      "set": 39,
+      "peak_gib": {
+        "train": 7.8,
+        "dev": 5.62
+      },
+      "checks": {
+        "completed_exit_0": true,
+        "account_and_sha": true,
+        "references_before_model": true,
+        "fresh_encoding_matches_frozen_match": true,
+        "40_updates_none_skipped": true,
+        "memory_event_every_update": true,
+        "exact_reload_of_final_adapter": true,
+        "95_dev_one_finite_position": true,
+        "auditkit_agrees": true,
+        "no_oom": true
+      }
+    }
+  },
+  "comparison": {
+    "b_vs_aplus": {
+      "b_only": 4,
+      "aplus_only": 0,
+      "exact_mcnemar_p": 0.125
+    },
+    "b_vs_a1500": {
+      "b_only": 4,
+      "a1500_only": 1,
+      "exact_mcnemar_p": 0.375
+    },
+    "aplus_vs_a1500": {
+      "aplus_only": 3,
+      "a1500_only": 4,
+      "exact_mcnemar_p": 1.0
+    },
+    "b_vs_aplus_complex": {
+      "b_only": 0,
+      "aplus_only": 0,
+      "exact_mcnemar_p": 1.0
+    },
+    "behaviour": {
+      "a1500": {
+        "strict": 37,
+        "complex_strict": 1,
+        "out_of_steps": 25,
+        "episodes_with_failed_query": 24,
+        "of_which_strict": 0,
+        "by_shape": {
+          "1-table lookup": 25,
+          "1-table aggregate": 2,
+          "two tables": 9,
+          "3+ tables": 0,
+          "multi-step": 1
+        }
+      },
+      "b": {
+        "strict": 40,
+        "complex_strict": 1,
+        "out_of_steps": 22,
+        "episodes_with_failed_query": 23,
+        "of_which_strict": 0,
+        "by_shape": {
+          "1-table lookup": 28,
+          "1-table aggregate": 2,
+          "two tables": 9,
+          "3+ tables": 1,
+          "multi-step": 0
+        }
+      },
+      "aplus": {
+        "strict": 36,
+        "complex_strict": 1,
+        "out_of_steps": 21,
+        "episodes_with_failed_query": 22,
+        "of_which_strict": 0,
+        "by_shape": {
+          "1-table lookup": 26,
+          "1-table aggregate": 2,
+          "two tables": 7,
+          "3+ tables": 1,
+          "multi-step": 0
+        }
+      }
+    }
+  },
+  "decision": {
+    "rule": "B joins the final evaluation (own registration) only if dev strict >= 38/95; A+ never",
+    "b_strict": 40,
+    "b_joins_final": true
+  }
+}

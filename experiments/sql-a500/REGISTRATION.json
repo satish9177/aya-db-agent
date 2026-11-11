@@ -1,0 +1,2398 @@
+{
+  "id": "a500-sql-agenttune-20261107-01",
+  "stage": "train",
+  "status": "DRAFT_AWAITING_EXPLICIT_USER_APPROVAL",
+  "format": "sql-submit-v1",
+  "expected_account": "hf-user",
+  "hardware": "t4-small",
+  "max_price_per_minute_usd": 0.006667,
+  "stall_seconds": 1800,
+  "checkpoint_sync_seconds": 60,
+  "max_input_upload_bytes": 536870912,
+  "max_output_upload_bytes": 1073741824,
+  "model_config": {
+    "model": "CohereLabs/tiny-aya-global",
+    "model_revision": "af89d219b53ed9b13b8a4645f9c8028973510324",
+    "tokenizer": "data/sqale/tokenizer",
+    "dtype": "float16",
+    "quantization": "nf4-double-quant",
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "max_input_tokens": 4096,
+    "context_tokens": 8192,
+    "max_new_tokens": 512,
+    "tool_steps": 8
+  },
+  "scorer_policy": "table-read-v1",
+  "inference_logits_to_keep": 1,
+  "required_environment": {
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "amendment": "experiments/sqale-sft/AMENDMENT-7-a500-stage.md",
+  "g0_02_registration_sha256": "e86597148c4ccdeb645777fb85f4090ec0eb1156789172165b425242d70f2580",
+  "g0_02_job_id": "6aef547de6320c66fad5ff75",
+  "dev_file": "data/sqale/data-build-v3/dev.tasks.jsonl",
+  "dev_sha256": "db613ff79c2b08753d13f5624ea1950d830aa259b8e35a9f1434409001358716",
+  "dev_effective_questions": 95,
+  "no_bird_or_q2": true,
+  "no_teacher_or_paid_api": true,
+  "first_month_storage_reserve_usd": 0.04,
+  "artifact_retention": "Pull and review promptly; keep this run's private input/output prefixes at most 30 days without renewed storage approval.",
+  "authorization": "Draft only: the user's explicit approval must name this SHA256 and cover its private uploads, one job and bounded storage",
+  "scope_exclusions": [
+    "shop retention (deferred to final evaluation, amendment 7)",
+    "one-example Base prompt (not implemented, amendment 7)",
+    "1,500/full stages, Q2 sampling, A+/B",
+    "BIRD/final evaluation",
+    "teacher/paid API",
+    "vLLM",
+    "automatic retries or extra jobs",
+    "hardware change",
+    "push/publication"
+  ],
+  "budget_usd": 3.0,
+  "timeout_seconds": 25200,
+  "loss_policy": "trained-positions-v1",
+  "steps": [
+    {
+      "name": "train-a500",
+      "action": "train",
+      "episodes": "data/sqale/data-build-v3/train-500.episodes.jsonl",
+      "out": "runs/sql/a500-sql-agenttune-20261107-01/training",
+      "role": "a500",
+      "seed": 42,
+      "validation_share": 0.05,
+      "epochs": 2,
+      "max_steps": -1,
+      "batch_size": 1,
+      "gradient_accumulation": 16,
+      "learning_rate": 0.0002,
+      "save_steps": 10,
+      "keep_checkpoints": 3,
+      "eval_steps": 50,
+      "loss_policy": "trained-positions-v1",
+      "timeout_seconds": 14400
+    },
+    {
+      "name": "dev-a500-nf4",
+      "action": "evaluate",
+      "tasks": "data/sqale/data-build-v3/dev.tasks.jsonl",
+      "purpose": "dev",
+      "out": "runs/sql/a500-sql-agenttune-20261107-01/dev-a500-nf4",
+      "adapter": "runs/sql/a500-sql-agenttune-20261107-01/training/adapter",
+      "samples": 1,
+      "temperature": 0.0,
+      "seed": 42,
+      "inference_logits_to_keep": 1,
+      "timeout_seconds": 12600,
+      "verify_checkpoint_reload": true,
+      "expected_checkpoint_step": 60
+    }
+  ],
+  "assets": [
+    {
+      "path": "data/sqale/data-build-v3/db/schema_000088-12d182477c90.sqlite",
+      "kind": "sqale_database",
+      "sha256": "835dbaa7d65ab2c7e6ba904b6858f7d590d2c85cbb1a5ee366e6f558d324abaf",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_000088-9bd052e5f834.sqlite",
+      "kind": "sqale_database",
+      "sha256": "28c9dff8ec637f9fc2bb64c8e9f886a4674e3a62c6541c57a9d7d4450d18b375",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_000457-75700fa1ab4a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "54380a032a411e7f75bed117c4433ec2bbf86d5193deab1b3d6364afbe5fb039",
+      "bytes": 73728
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_000552-3988436d9e90.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0301c43adc390be6def409d924b88854c38045e669aa025c0c58df995f6559bf",
+      "bytes": 344064
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_000552-dec3c77f87c8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "865c6314cd81c9877a4b3386a4859713fdd990cf660a336879cb0b382405317f",
+      "bytes": 335872
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_000591-fd8d5c8322fb.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c83f47eb7014a4a6217a2443bb6eb4ecfe713e8db26f15a1683953de598b69d1",
+      "bytes": 65536
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_000764-35b00e1e7c44.sqlite",
+      "kind": "sqale_database",
+      "sha256": "4c5a4e5093573b1d3d65702c91d5e6a38641e080113fa514f4f40a93ab1e56a8",
+      "bytes": 208896
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_000876-f87ff5f7e28a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "42bffa95d75d30676d2389f530612a8e118a3ff8de3fba74d718b7235590a066",
+      "bytes": 258048
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001062-0fd10d0a5b56.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1a6cb4e18d43ea7901466a1834ac5551ffacfef91bcf8f6b8d7804769dfca958",
+      "bytes": 176128
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001092-2c70975ea1df.sqlite",
+      "kind": "sqale_database",
+      "sha256": "28fe8862cbf30e5e31f148d0bdb32a807e1f4dc3742241bc026def22177ba251",
+      "bytes": 192512
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001092-6f4a66e39caa.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1cc3b31e6188a978522ea98daef80fe0a90a7cf187d7a62f2118b23972cbe44a",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001221-4f7cde802e34.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d2a52411ab9d5eaf0d3112e599a0cf8617bcec2e2473338da7f7e2421bf08803",
+      "bytes": 147456
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001288-a8329b95398b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "571b426b058efe021286c6edb3cadef2f9c60caf077e0059531d6fa4a54b1d22",
+      "bytes": 69632
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001306-3c0b78338eaf.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b31c92d9ce430bfaf8e47ed1c7125447fcc4774e9b49362ed3d3616e9c64c53e",
+      "bytes": 274432
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001517-318ef4fb9e7d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a048206f6fbbbfcf0e72916a69748f3942a87788c78e85dd6ecc881066ae1c88",
+      "bytes": 307200
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001570-5f50c47b1729.sqlite",
+      "kind": "sqale_database",
+      "sha256": "22f12a4d57f3a4ef418e7f41bf822434e10e755cb8f052d9750b52769e250c9b",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001663-1269c278fd43.sqlite",
+      "kind": "sqale_database",
+      "sha256": "35dc6dfc96867789f4db8a629437df2bc39c8fdabff8754d73962bfbcf64ad17",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001663-9d5269a13f3c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8bf34a7d63d06749105a9ba999ece989c30669b09b968b45a8544d686c76eddc",
+      "bytes": 192512
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001851-0d8b53f0a5d9.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5b308fce91b44d78cd382672e9c86ae55fbddd2b87db981673e3d11cec8e56c5",
+      "bytes": 196608
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001884-4aa27b27d2ee.sqlite",
+      "kind": "sqale_database",
+      "sha256": "beaef2d58737afc3d9e56f7bf2934f7fec6cfc32c44bcbe65aaa06db3133740c",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001884-9e96c921319d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "939378844a411ba1e4ee4cb8f364ac3ace6e5632dcbbd06107f90c2d3440e0f7",
+      "bytes": 32768
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001884-a95b47155fff.sqlite",
+      "kind": "sqale_database",
+      "sha256": "37bf26e9c45dab8c9f21ebb2db779d9a544041747417f6aaf20cb825cc458914",
+      "bytes": 126976
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001885-e46fe4c836af.sqlite",
+      "kind": "sqale_database",
+      "sha256": "2d3818b9a2b8910a3e3272eb09775749131877082cf4a5443d19fa029b006ec9",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001899-172531cf95c7.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7c3873a1687d0c7a28fccc69a703e7a29bfcb50e1993dee8dfdbb56d63016edc",
+      "bytes": 53248
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001899-acc263d406a1.sqlite",
+      "kind": "sqale_database",
+      "sha256": "54faf50bc7e2667753f295de11591d2101fd7fdf41172c3e2853dd916d160d07",
+      "bytes": 102400
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001911-ad8970e6f13f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b0125ec2048c8d4b3415ac3d14a1ce5d73508de09157c1ba0b4eeeff1f960a3a",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_001982-9558904bb522.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6bd2d0f1d7a2c5a6807f4f066bb4a89e604bf3e9dafdf43858f553a862c6e250",
+      "bytes": 221184
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_002221-97eae74e5928.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a8fe4ce49b880c3b70c698b0a6209ef35318048dc63ae10bd2a8c3a157960f5b",
+      "bytes": 114688
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_002257-6787b7739e00.sqlite",
+      "kind": "sqale_database",
+      "sha256": "eb5b89b98ae96de299a43e0d9e0665d1d71b2ca509fe0d855be9ec4e26084925",
+      "bytes": 196608
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_002335-20b89a5c79bf.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6194b9bfd60e87d22e0308243510657179839123eaec1e754a7331adf9fdfd39",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_002439-9a6742f1463a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8d9b447fb47bd132d959032ed506f05cd8209a0ec3c4167b7ffac6b111b76c90",
+      "bytes": 204800
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_002455-3597201a015f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1ed28db719b8ce8c9b331d19eb07f6e612693e8088aadd20dc78774458ef1f33",
+      "bytes": 163840
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_002591-cb5b45f02a61.sqlite",
+      "kind": "sqale_database",
+      "sha256": "422b02b381959421cfb39207d695edf3a63dab25c33a5e62d0c569e1324ea72d",
+      "bytes": 69632
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_002688-8caabd2a8c4e.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1f786a0b1155f4ceaf89ce82af12ed02a1ccfcbf44c3acc4878e3e5ea08b5481",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_002931-1ac6aec48b07.sqlite",
+      "kind": "sqale_database",
+      "sha256": "cc4f1c1b587bb0f2da8ffc7f5c2336011bb1f4e56e1e05e220359f41c1fde45b",
+      "bytes": 208896
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_002931-84ee5b9415f8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0e5c59537989fc4e67ffdd1d9ec3bdee758e925736171a0b98c53bd36f5a2ff4",
+      "bytes": 200704
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003248-7aafb40050ac.sqlite",
+      "kind": "sqale_database",
+      "sha256": "cc43a2cbbb4c6f4f59ce58b80fe34adf8b5211813669c2447049d21de234e99f",
+      "bytes": 184320
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003283-052b02f24952.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e16056700497626956fa066b1f4cb8ec435fcc4a699f21c96018f15bad39be8b",
+      "bytes": 286720
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003283-65f4a9850b25.sqlite",
+      "kind": "sqale_database",
+      "sha256": "233eaa1130e519c5dce5da6ddada8c648511f5678629ccfa36389226f3a89899",
+      "bytes": 122880
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003331-0fe47097dea2.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6837009a67c3596a76b5afe5232b2e25318d954b52249d7134d515fd43807191",
+      "bytes": 155648
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003331-8e5ba3fa3451.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e0e3045aebf1dc7bb638bfbdddce0b6053ac61fcb5d093c7b5e04ecb945439d7",
+      "bytes": 135168
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003447-7d86b74c1d5a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "15cf5200d6dd3a3a08ce870a499ed7241855923489b106a9638ebde820567b1f",
+      "bytes": 143360
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003515-24500773f716.sqlite",
+      "kind": "sqale_database",
+      "sha256": "44cb0b0de67dd4f1f3759e429a061c3aeefeb479f892d50eeaac29650ea2871f",
+      "bytes": 241664
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003586-f709952da02a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d5f03173ceeb8e4249bfd1f2edaef084e3981ae544fba79cfc4250cce0fee6f1",
+      "bytes": 40960
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003723-079347246979.sqlite",
+      "kind": "sqale_database",
+      "sha256": "104519513ed06793eb9577ea3e3e3f6164feb9a01f4b7db05b1a0657903b4b7a",
+      "bytes": 192512
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003723-d227613000c1.sqlite",
+      "kind": "sqale_database",
+      "sha256": "692a90d5e881afaba28e625f6ed5c89a7b05058e69b170ab159b06f887af6a13",
+      "bytes": 188416
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003847-2f97c8df3047.sqlite",
+      "kind": "sqale_database",
+      "sha256": "33a6c7b38efa6e80216f7c9d3ba500eb2ce7c70b5eca72a260e62ebaaae828a6",
+      "bytes": 335872
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003847-601bc7e863a8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7c66a36b8d2974c944723f6e95f071919db9ea9a5300385450854656f1bab9d1",
+      "bytes": 53248
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_003985-226b7ee82add.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8ee01b784b8b9781e7833b045e7a8a6e59dafe7f5d021e03734f7915440aad97",
+      "bytes": 110592
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004059-b1ad2994f395.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e2f5db2ec5ee72ce88fb7f1f6b5cb2ee51bec680951f9897032dcaf9cd232d2a",
+      "bytes": 159744
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004059-edf25f1771cd.sqlite",
+      "kind": "sqale_database",
+      "sha256": "2dc24d70f993c5b6def08b3ada4d042385194def507d40121d6c22e4ae68c18a",
+      "bytes": 196608
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004381-129bccbe9605.sqlite",
+      "kind": "sqale_database",
+      "sha256": "23c14ebb9b30418571bd41cd123f21f569bba820521c17e7ae888a52badeda5a",
+      "bytes": 90112
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004381-f2c3e34d5f2d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "425e282269f1d32b1fd7795a7bebe0b8f26e079fc61f8760935c00c38b9883fb",
+      "bytes": 143360
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004398-0e6db2dbf962.sqlite",
+      "kind": "sqale_database",
+      "sha256": "49aae393afc186ba01af68981be9a49ce4ab6598d086f4673eb7a70663f3e8ef",
+      "bytes": 122880
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004405-8daf5b398027.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0039713e56080d4f668d3a1864d2b45b619abace407658dcc09c4d5f9a7358e0",
+      "bytes": 184320
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004429-1e210755fc11.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6ee6b2245adebb359d67e9fb9e6222144e724acff22527ccb1235a9def9d09c2",
+      "bytes": 323584
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004429-b9bfb90f1718.sqlite",
+      "kind": "sqale_database",
+      "sha256": "9cc5400e64249afbb5c77fb460e841ce2a1ee8e9ab4a08d078f3196c224cc460",
+      "bytes": 139264
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004429-f7855689a5f6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "4707a7f2007ca42680bda480932f287f56596a8addf30cad191a37019facf547",
+      "bytes": 344064
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004499-9b34d363532c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "dda46598f9e5c7129261a4b2843437b8e1052ff434635ce9e042fb1eb70cd973",
+      "bytes": 196608
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004567-a378ce902535.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c3bf4a8a0b90a83dbf27467ecdb90e2127c7cdd04dd8d316d84df032c8b9e4a3",
+      "bytes": 155648
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004634-046a0b8baf57.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0996e576317f96dd3cc5045730f79c1feb0fa8050b175835a36a0a57b193590c",
+      "bytes": 266240
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004634-c86eb8c4eaef.sqlite",
+      "kind": "sqale_database",
+      "sha256": "9e5bcc4e634c4d19f6ca26138652eb782cce447f544fc6f591fa4f29daa9c7b1",
+      "bytes": 114688
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004751-9951d9c7490d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "aa1dbc53989c26109bc3ca2d5a572178c8e1fa9045328cb9dfc389b66fb9ecac",
+      "bytes": 122880
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004807-2262864eda6d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "eaede22a568666414f21ae5231ede69368771a2365c03f4e36c9939cffd84810",
+      "bytes": 176128
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004814-a78be97722f8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "74532f3c4b1fff900881ebdffb458369918b6b0bc8a1cada7dc9fdb4313d7b4b",
+      "bytes": 40960
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004891-90e35f4386b8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0e01171cd1a6e0bd86a99ba5aabad301c3c52fbbfb90a558fd94cd9a70a89806",
+      "bytes": 172032
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004909-1182e4f7bf80.sqlite",
+      "kind": "sqale_database",
+      "sha256": "9c30ed7b7624e41cb67c4912cd37eedafcd6e76f76b5924c8e426f5feb1d7c70",
+      "bytes": 196608
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_004909-f876bb96b626.sqlite",
+      "kind": "sqale_database",
+      "sha256": "08f2bdd6103a74ee5529467ab51c76d44a87dddf416022145243ff6f9e98340a",
+      "bytes": 253952
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005002-0a48ffb00c01.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0fe3c5ce7673352fb3932b580acfb8555d9496eefca33cc0dceda97b2009c587",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005085-cd4f8a6797e4.sqlite",
+      "kind": "sqale_database",
+      "sha256": "bfe522883431716d33bbc7ec1f7afbcdc71ddf54831c4afdf48debae498a7775",
+      "bytes": 24576
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005140-b9850ee756f9.sqlite",
+      "kind": "sqale_database",
+      "sha256": "9bc88da9673e1db5db945faeca1b9ee73de27ca9c904802700c480875c56a8f5",
+      "bytes": 32768
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005185-3882bacd9c8b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c7d87eb874c7d6779da0694c0cb1f686161bf0ac50a95aaaf0d1134d617c30c3",
+      "bytes": 405504
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005192-d63123c65f16.sqlite",
+      "kind": "sqale_database",
+      "sha256": "29340fe6ae200be7d7c56b5cfaa38860df8674717ea21c07797cda0555d64931",
+      "bytes": 49152
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005268-836098309903.sqlite",
+      "kind": "sqale_database",
+      "sha256": "29d00f062754dbe57ef6cb4af351e0214b94a38ccc295c17e98796ae83d7d3ea",
+      "bytes": 253952
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005303-6e081348dd76.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e860f94935066492571bb44f99cb44304457d56ca0adaea78f9bdb52141171d6",
+      "bytes": 106496
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005453-1ad7a0198000.sqlite",
+      "kind": "sqale_database",
+      "sha256": "16ba1213ea87649cf9cedcb44b2f958f070bc2552b883c9c93075286fb198bf3",
+      "bytes": 454656
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005453-53a22b616ec6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ecd125575f7cf900d57cfde56729e5cca6c852891c6903f2ff0b20854c88a852",
+      "bytes": 258048
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005557-3cccef81807c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6fc40c8f31ddb7310bb76fef144f0d88562b8187c7fe840df95ca4b71172df8b",
+      "bytes": 102400
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005687-77b2b7a9d9e8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c6b9fcf3d7ccaa1aa781e0b105c48c6a8219e41fdf7866fbdb23b2b55bb2c6c8",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005691-763a31479a39.sqlite",
+      "kind": "sqale_database",
+      "sha256": "aeb7965998d17ee6782b643d408e5a0a5b9e78bfea546f6b00d6e653b910a7cf",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005691-98da40aef753.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b0d8ea392467384892efc390072ad5b5dd984b194068b141a4e50f85e1f146f1",
+      "bytes": 122880
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005691-e153262dc2f3.sqlite",
+      "kind": "sqale_database",
+      "sha256": "bc58ab551cfd498a8e3c25deffb26a169b8191ef8c8948bd3838638d01d73312",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005839-4d510ac7979f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "280dba50f4aa1895d3d1cc5bd4cf78fe469991df05c2d454bfafed7f34e2c1c4",
+      "bytes": 192512
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005984-dbdefcc0c253.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a6cc8bc134ca216a91a2728ff7bc596bc64bf895cf64a4689fbb514519d4ec75",
+      "bytes": 159744
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_005984-e9e21e74ff3d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "31fbab4ae6a3b90c125dd0dc769ba09728965c2c53459cf768fcd0b8935ee0ff",
+      "bytes": 172032
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006043-3e4d8c358f2a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "26e10cab1fb6fe2572eba12cf5505cf69c2f1320ddb4e8db153066b391294332",
+      "bytes": 57344
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006043-c0416bde7c6b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ea6942109ebcc0c0a5e35cac7796d1002ac9570a5b9703fc70376fad860770f5",
+      "bytes": 49152
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006130-3a919630d139.sqlite",
+      "kind": "sqale_database",
+      "sha256": "f74ee61505653a764c153836894d3fb6eef10feb7d2e2e306901d946c5e1491d",
+      "bytes": 393216
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006183-8424f85a82bc.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d9d5badb90d0ce2b1f35d2ff2cefd16a5e0e59dfed7e935499a0a43f81e94325",
+      "bytes": 61440
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006183-e3c0fda4e082.sqlite",
+      "kind": "sqale_database",
+      "sha256": "28ed767ee387f298f3c1b1f3de6851ab07aead136c038ea9f0e2d95baba1b16a",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006201-4c8c7369b867.sqlite",
+      "kind": "sqale_database",
+      "sha256": "044f545c49dcb3831fb2fd5c6b8f1a9caf3c034e668c46401c34035174ff369b",
+      "bytes": 229376
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006376-dbb8a0fa4bab.sqlite",
+      "kind": "sqale_database",
+      "sha256": "bd2196a27fe861905a8f394af9f23405afd112213f80ecb3de2d7e0e8db25a77",
+      "bytes": 249856
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006408-95e1eb0dba1a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "078e0f2ba18a6403998aff5f88d57010ce224a7bf1f6c48871cf356353f02472",
+      "bytes": 200704
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006460-e242f8f9f92d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8f7ffe7b8966494187cac20a826d2c222840545178451a2cc0824b2286e70205",
+      "bytes": 110592
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006707-2ccde0471c67.sqlite",
+      "kind": "sqale_database",
+      "sha256": "915c4587e64468dd0c3c756de0231f4d650abbe57e63d46ae46e97156151dbbc",
+      "bytes": 36864
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_006895-535d8e37f8b2.sqlite",
+      "kind": "sqale_database",
+      "sha256": "db52d8dc55f6245cef1dc55e64a7d4145e7aafa57917d8480bf4def2d71364ac",
+      "bytes": 86016
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007035-d19812889b10.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c728630324041b6c700d836c13764857262ce668197e599c0b7f59602b6b09e7",
+      "bytes": 270336
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007118-a50cb80626f8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1624ed228abc5cf669e73a834742f14171a3ee1351337a87923f0e73dd51f036",
+      "bytes": 184320
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007164-90f26de7d56f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "4204ed89f32ebd7bc4422bc1065488981a6c309c7c52fcb6e3203faddbdd73ec",
+      "bytes": 249856
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007164-c4dba2b12778.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c15b2d827326746f9116f2b6f6b883d80476ab6d43c73a25716f6eaac338500b",
+      "bytes": 245760
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007353-f636c2de9c2f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d1036d23b2146591a7792200d3e9304808730abf9c116f8199041c7b04099631",
+      "bytes": 139264
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007353-f9d66bd94f7d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "31de87581f8a783077273e0578ec9b0b4a34b5317fea6df5e82965c9a19fd0fd",
+      "bytes": 69632
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007620-4107cf472d26.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c58535393e54e547e58504e5968b5d2953166364116e1eb43f9273f9028d6ed6",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007647-280f794d794e.sqlite",
+      "kind": "sqale_database",
+      "sha256": "f82f38c3934ce6770118bf37f70ac81fb381f8bc23e8ec2f4fc13248fe0e2c76",
+      "bytes": 208896
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007746-8cae39d84213.sqlite",
+      "kind": "sqale_database",
+      "sha256": "616cf0238d08b4e36dd59cdb638257e00be6035fbfbfaaa4e9c1923145c163a4",
+      "bytes": 57344
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007802-8866d71a3047.sqlite",
+      "kind": "sqale_database",
+      "sha256": "41b5f53b8581d6a8d179d9b92787b3b903dd76e98366ded07805a887f4b8a509",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007802-a268de71d1f6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "45783a2151ee556ba5150a7839517087119aac597adf2155cf49d29802416716",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007806-c10c68df52cf.sqlite",
+      "kind": "sqale_database",
+      "sha256": "25c7cbad19762cc828730db02e61995d0eaabb99332640b5db6e85ae180e6d40",
+      "bytes": 225280
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007837-12c5ef748702.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7c5f7fe9a07a905fb550eab518faf08801bf76566c93c3eced3dd308fe4cae4d",
+      "bytes": 163840
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007880-d7ba98b040ba.sqlite",
+      "kind": "sqale_database",
+      "sha256": "aa6127c57c0cb75ed2f1361ad49d8a7cf868834749f3fb5b08f578ad00cc90af",
+      "bytes": 135168
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007881-cc71772c4439.sqlite",
+      "kind": "sqale_database",
+      "sha256": "3a1d0bb0ec809093365990d7641fc4e800d5d88654fcd9d287c3fbdff90174a4",
+      "bytes": 73728
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007881-cf77b6620b43.sqlite",
+      "kind": "sqale_database",
+      "sha256": "4068e6e33b3ac4a487a6e6d6660127ce89414d05ff558d8709e39011be02ad01",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007941-de1b356a6ada.sqlite",
+      "kind": "sqale_database",
+      "sha256": "12dec5d5a172a85de706b71b7796e2b3075c2721257f901c91facaa983ca4028",
+      "bytes": 278528
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007941-ff62ca0b16f3.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b6a6b076dcb0761c97a9cc646ac4eb7705a4922b7fcbaf0e010a848e415a0129",
+      "bytes": 143360
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_007955-64f01ab9a64b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6a7b0bd1054e2c2b360010a3a2cdfe6f244004a0b12936d39e2c795f0a06741f",
+      "bytes": 90112
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008032-06279580942b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ff186231130dfa7522700f5685e9d91739d452a3f722de4fcb9750141e8865d9",
+      "bytes": 114688
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008032-7106fe87ed09.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b241cccb101d9be056d80ec893effa812089277e95b435fd7a14e4f7c0053f07",
+      "bytes": 258048
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008032-71088edf3a22.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a52fc4cae21b05e9f13912deca3247c3e1918bb521e533f8266093602ba3584e",
+      "bytes": 323584
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008032-ce1a75da06b6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d90d56ea4a54d4c253c05eae4dfc3c01df85bd5cfe3cc9da6a788bbf4e1ced10",
+      "bytes": 122880
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008085-3bdadd4a4e1a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "fd914eac49ddbfce2aa1911f70aa3f90913627daa28d6fef54ef346d4c8275fe",
+      "bytes": 81920
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008091-116c17ca5c71.sqlite",
+      "kind": "sqale_database",
+      "sha256": "839689b7f4d69a23c923cddc49b266ebd2424f7620da82c7db23516c0f8d5ad0",
+      "bytes": 405504
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008091-c829a68e9fb0.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1ca972d750b6a59353488b3f54ae053051d6117ea35d82597e6c712bc0e999ae",
+      "bytes": 188416
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008091-d75886364519.sqlite",
+      "kind": "sqale_database",
+      "sha256": "87b1a3adb922ea2a1249f3c298e3bff8c3b304b5c6d228b64bbfe0dccc5ef2a2",
+      "bytes": 225280
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008154-9963b5cfe213.sqlite",
+      "kind": "sqale_database",
+      "sha256": "08a4d98e525ad31d45a9bf1803896e4516941648b0e5de55a1f8a3228f48f3ee",
+      "bytes": 86016
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008238-35cba3a85b5e.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0cceb02cc4e80e22b88db7d3262e25ca8bdf976832a299e652c8b38b20f20641",
+      "bytes": 69632
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008238-cd7081b41c19.sqlite",
+      "kind": "sqale_database",
+      "sha256": "f9e1d43ed7dd36bf2eae1bad21ed3a5aa627e14e7fb79ed55114e3029bf244fa",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008261-cdc8dd13d368.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a5fbdec6226f4d0d97d2342b93776174c7ae1a0f9744f035944ec6a69dd6101c",
+      "bytes": 229376
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008293-1a049c4aeec6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "bb89654db6e0ccb1d5cf3e84da61caf458f9bc499e589cb614d0638110188821",
+      "bytes": 274432
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008358-0c2cc1f5b811.sqlite",
+      "kind": "sqale_database",
+      "sha256": "01ec656485ea563d9b004749a6f8823a08ef7662d55c4d24b4eca1550ea597ef",
+      "bytes": 135168
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008358-5dcea2cf8497.sqlite",
+      "kind": "sqale_database",
+      "sha256": "2b60bcda91d39994b84e72872f9d4bdb658cb072c6f3eb58ee803e040690d686",
+      "bytes": 413696
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008427-9144912e8bb0.sqlite",
+      "kind": "sqale_database",
+      "sha256": "10c1c167c8928c331bdae1ba7256481d15511a055aa1d966df25e85478e1b108",
+      "bytes": 106496
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008427-c029bc869491.sqlite",
+      "kind": "sqale_database",
+      "sha256": "3054ea2afe75025f322e1dc1b3c500db5bd15404423cefaaa57bc3acab112375",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008427-e4787f2223fa.sqlite",
+      "kind": "sqale_database",
+      "sha256": "90190963feaab1603f3f92d9bf7d59fcea9b6cec0360afb1fd79e0f6ff50adb2",
+      "bytes": 86016
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008477-076a8a6ed5d4.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e445f0c50842b7af02c96db6e4b369f618585b6eaaafacb1038f2754bf84be29",
+      "bytes": 57344
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008627-2d4186905934.sqlite",
+      "kind": "sqale_database",
+      "sha256": "fec167284fdd4c55ee9fdadf745fd0b71d942f2d6637cfd5f493e098781cd7f4",
+      "bytes": 122880
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008686-322b0f5c18c0.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5532825dd8bc72bfd27193c6c7a93fec14b4b5084214d5d1da67865dd8ef8082",
+      "bytes": 73728
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008809-64490a870222.sqlite",
+      "kind": "sqale_database",
+      "sha256": "3e4816e6c1e57f97388742427aa599e9026adea78452a0e8b80f210bd48c092c",
+      "bytes": 139264
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008842-1ddee5061ed7.sqlite",
+      "kind": "sqale_database",
+      "sha256": "9e72cf58394c75a03fba53e1f08389d77fddfc41863892fb4c72c40297f9450f",
+      "bytes": 262144
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008862-9df1bedc3765.sqlite",
+      "kind": "sqale_database",
+      "sha256": "65d1c5b6eea1fce962a0fe61fc78da4a7247a81643314d50b62f111b6f55b688",
+      "bytes": 483328
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_008915-98ca35bcd0a3.sqlite",
+      "kind": "sqale_database",
+      "sha256": "faf16c21562ebe58ff6ff2a394caf4e1ad042ad9c143e13e831a85160a18997e",
+      "bytes": 65536
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009015-897e919f04da.sqlite",
+      "kind": "sqale_database",
+      "sha256": "44857dd39193cb54574fe83cb2e2a21514e7c0683c101e6151fc13fbf98fba80",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009022-03c1cab1e028.sqlite",
+      "kind": "sqale_database",
+      "sha256": "037716b790b9d681a1735e6c26dcc124a144f49e8115bdc011c5c5b0cc5f4d57",
+      "bytes": 102400
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009146-0835d7721ae6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5cf3149f18353a6721874b418a2f4c1db774e1531ed82f27bea66beb77b4b08d",
+      "bytes": 262144
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009207-0b52d93cec57.sqlite",
+      "kind": "sqale_database",
+      "sha256": "3c57234d90d4ca37babd7101441882724cb5b28431ab8b75d00798ae6d7bfdd3",
+      "bytes": 180224
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009244-b2c7cb47b744.sqlite",
+      "kind": "sqale_database",
+      "sha256": "76ccf479db5a86b2a1a2aac74f62e303d9f4ce1271d89f457a990d8624d4778f",
+      "bytes": 28672
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009265-b4ebe00f8099.sqlite",
+      "kind": "sqale_database",
+      "sha256": "63e3fe5c107dabfb95a493819b72d64758952a50f2630023779669afa7e4b76e",
+      "bytes": 245760
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009267-92de495f2263.sqlite",
+      "kind": "sqale_database",
+      "sha256": "232aba415d51b51cebe37ba4d38d0e3a0b235f83397b73fe358362d9893084bb",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009274-f4ae6f955067.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6daa9f55d53d413255408074f78302fde0ed994ecac2ea4076ef1431b5714314",
+      "bytes": 208896
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009306-c15509f83b18.sqlite",
+      "kind": "sqale_database",
+      "sha256": "484994112523cb382f9463b4008501228f0ddb50abe363a66414b7395e6b8ace",
+      "bytes": 303104
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009317-b4479f0fcd11.sqlite",
+      "kind": "sqale_database",
+      "sha256": "142fd4ad740d791f3a949e2fc6ca73d3c65580b5d0b203c6eff3bab1a2d57013",
+      "bytes": 110592
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009630-49e1cb4fbedc.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6f5b3eb396569b652f65906e41db991a54b1db020e065f4c3518feea9b2da2ae",
+      "bytes": 294912
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_009844-5e42207f06b4.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c04a505acdd9f90f63a44d511c30eabb61c99244135b36a85511063668752948",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010053-3a748a589e3b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "36ecfcffb333c18465561c5770bfb8ebbf61c82e0e3b19f82924962a058363e7",
+      "bytes": 143360
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010065-ef396f4ed93b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "fe74f7817d63be96d75c5089f03669a4aa34da40a585b4763fafc9e98555f43b",
+      "bytes": 73728
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010071-77efbddce4bf.sqlite",
+      "kind": "sqale_database",
+      "sha256": "879231cbf6ff21cb0ceec62ea7ba0c404d2a6c0b039e586bfe35257b990772f8",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010222-73052ab8c8c0.sqlite",
+      "kind": "sqale_database",
+      "sha256": "fc179d7aa0cfa2dcc2229d654dd2970e5e43ceac3a5225cc44260b8985dea9b3",
+      "bytes": 294912
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010265-9be0321ed1cb.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ad8ce86fe60cef7d704127dc1566a3d15838a63f86e1fc27af5234fb963d29f1",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010376-701674da10b2.sqlite",
+      "kind": "sqale_database",
+      "sha256": "dae04b2183ce91bfa2c28c3dc0bf555afff2873516e2e9c96ac0423e53e7c33f",
+      "bytes": 102400
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010378-b1a1f493e1c1.sqlite",
+      "kind": "sqale_database",
+      "sha256": "56f59ce0e4ffb452a76b124883933f58aa2d3d6eb4f1bbcf3dde3fd882fa8108",
+      "bytes": 135168
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010444-f978c85e3c36.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d4a8f1b99cd888d514179bab286e0efdf441becbd7e70e16c502332fc1cd9558",
+      "bytes": 253952
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010522-62cfe8cad8d9.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c43dd53b724abd74e79ac8d972730eb79f3cfae18de992d4a97b2e9f9fc98b23",
+      "bytes": 61440
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010738-f76244a905e7.sqlite",
+      "kind": "sqale_database",
+      "sha256": "73ab53798a871891987efdd5e64ad10b836ddd544dcf5e4ef39b01e4a66220e6",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010836-ac1e3abd1451.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5ed006175e951847313ff4c0d7272cea37cd402455b4c910505152633037cb48",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010938-80f65887289c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e1bee66d4905476f6121c8c423de52df0578e57027f1927d06fa4646b9c12c91",
+      "bytes": 110592
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_010938-b603e66c1eab.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6f36d0cb82865b87520a18b1b21d75900660ba1697aa1acd51a1cc546c8b1d98",
+      "bytes": 102400
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011047-256df09327a7.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5c52583386be2e95f56af0dc7976c6c1bb2841d300368f87f670e021287dd4eb",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011111-307a13cfde52.sqlite",
+      "kind": "sqale_database",
+      "sha256": "fd3cd73f3b04b299b71ea222945f246eec9dd9226d82fee5e8a3ca3e26517064",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011208-7dcdb5b6d8d9.sqlite",
+      "kind": "sqale_database",
+      "sha256": "25e92bce8c1397566df3b794fb4d821c93870339ed279b98b1bb02d568c8b638",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011526-f6210721bb18.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ad1eb3bc6f4ff2a1bf3938a87572779acbfc127cc159848b77aa67b1000e6f7e",
+      "bytes": 196608
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011586-efb9b83fd4c1.sqlite",
+      "kind": "sqale_database",
+      "sha256": "f0effd7e61fd9f240ca6394c1d89c9fc846ebafffeb49a4cdd9cb82b9900c77a",
+      "bytes": 57344
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011609-ef428adec5d0.sqlite",
+      "kind": "sqale_database",
+      "sha256": "442cc1ff91b40adbec281fd6d98a898a39fb039c0241400b732d3090ec4264fe",
+      "bytes": 32768
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011616-fe5c049c9b79.sqlite",
+      "kind": "sqale_database",
+      "sha256": "17484f9564a67f13261457fe34cd05b0b2c265fe99904078040ed5f32855803c",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011654-11bdfea97b29.sqlite",
+      "kind": "sqale_database",
+      "sha256": "87c3132b02a1fa26253f734cbd8769de7e4d312785bf0744fd09a4a99e88b81b",
+      "bytes": 28672
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011713-3a5902c82fa0.sqlite",
+      "kind": "sqale_database",
+      "sha256": "4fce5dadf3c47fbd506d7f22f15ddbcdd741591e50c86bbcc5d4c002e0568b21",
+      "bytes": 159744
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011713-9618467395a7.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1da0ac11baad497ee3a92c33f6785d527e988c492d170b946bd9df97c8576006",
+      "bytes": 290816
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011713-a9792ac84eef.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7999d4af967170c711f66dac57c4e382ede2c3fb349d339b844b74fdb7658a03",
+      "bytes": 196608
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011713-f139e3ad0eea.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c4b2cbdba15a33d135c6077826e9a7579b8ef7d61fb94ab2a00f13308497025d",
+      "bytes": 225280
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011850-659ecf1eeefc.sqlite",
+      "kind": "sqale_database",
+      "sha256": "42199e183268b3dd49432a1bc829c2ed717eba74d5e4f783e1d9f32a7945ad28",
+      "bytes": 90112
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011850-754057f277c8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "11e0b239eed26d7ede3008029462db70084a780524d9276134715c36c5f08afe",
+      "bytes": 200704
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011850-b3f38e4db60c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7b0b6581da91eefad17002b0150d318003ce717319827ab35987baab070e87d5",
+      "bytes": 126976
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011906-91ee53786908.sqlite",
+      "kind": "sqale_database",
+      "sha256": "12b8193ebd2220ec2e0b5e3bde05476ffe9223848da8acb8900916b3c4b55ccc",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011912-05199d880d76.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e2f21a6ac2aaed9fdde42a14a2a1ec12ecdd8adf730faf5e7aa0821dc584f80c",
+      "bytes": 237568
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_011912-7769b4222ba5.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6b1a9cf6ed37b067bde47950996b936b26ca59b8ae0fa6be88d43404546e37de",
+      "bytes": 147456
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012029-87acee2bc35b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5c56c4166973fa956570d7ef11926dc606f979db1cf691ca9d7cab69aade3ae8",
+      "bytes": 40960
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012176-e1f86b98b429.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6046c4d3f92b8ccee85962d5d39d9c07273e18b92efb03eac73850e9559c9689",
+      "bytes": 61440
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012246-7162c6f85b84.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6615e534838f06d27c26ef7aaafe45d76175b2e99c00584fa64a4ff94f8e927e",
+      "bytes": 270336
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012255-00217ebc2edc.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e4b8274e35b3c2dbd968a48a4d278103c1dc15de6467369bc309cd9b7421ba17",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012256-4168735fc2b9.sqlite",
+      "kind": "sqale_database",
+      "sha256": "28bcdbd8ecf98244f07c826e951b8c5aa80b0997c08bd0f0c5f8fd4ca0d2ac12",
+      "bytes": 331776
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012256-9a3a7bc64d2a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "86494dd1b30e69fd764c5fcb1f86200c57ed0f345b4e67734d16daeb0ccae4d5",
+      "bytes": 262144
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012363-b8f35604f37d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b28eb6003803d679aacd8ab9986b05c391a76acff84fc054beb0f0c81af3b549",
+      "bytes": 86016
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012461-8db6452a5a76.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8b1c6bb64ecdd2bbd43a2c1acb7c0dad2075ac36b95c15198e57495b5a15e7bd",
+      "bytes": 53248
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012542-84d66786ac4b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8747eda7fde53a588048e648ee07087c386a8ee8888c384febbb814b020c56da",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012761-2777072ce158.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0d1c252037c8444b84e5b910cc1c4a0fdab9c9c2026d498f88fe2710751bef79",
+      "bytes": 69632
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012875-6687f633cb98.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5829f2c5321b0e50233ed64df1bc444cf93e68a7aa1469bdd2b742113d820633",
+      "bytes": 192512
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012884-3dc566652e43.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0f127452c448aeaf4ed7955b52ee63ed3032eb78c090d985b5908092a5bd43e7",
+      "bytes": 610304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_012997-1c99fe150553.sqlite",
+      "kind": "sqale_database",
+      "sha256": "333ae19a0e2f49271082612d0b2ea1782ffc12dbfc6b3e85b89dac2a1cfd751f",
+      "bytes": 188416
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013017-7847e5512c70.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0e1f35da53d92a2a9b4050646f5a980138fdc046484bc45285d6f0108a20570f",
+      "bytes": 49152
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013064-aace3cb09bbb.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b3c7cf9d3ae8009c51cbc0a38bf6d5a2faebb92f2fb40b863064b0eb0deb3918",
+      "bytes": 49152
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013079-cfb8d7c20cc4.sqlite",
+      "kind": "sqale_database",
+      "sha256": "407fc8b563241f0edbadfa906cb0a406d26a9eba4a2c3e663431eab6cbc2a9b8",
+      "bytes": 65536
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013096-8d9e60d14681.sqlite",
+      "kind": "sqale_database",
+      "sha256": "58199b301892663d60e867cc9bac34e1aae280e4040f26b1cc07059475e39a25",
+      "bytes": 126976
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013151-dfa4575ae22b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e782a1a4bba9706f3f66c35a2eed356cc86f92736a3993b715dc50012c3dace7",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013215-79382ff4084d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6b7dcd7b3bc089a85dbf72c377639e9befa4f634731c602e7a22b8c51ccc1702",
+      "bytes": 237568
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013338-c2676755408c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "49421666d0c0d0ca41b582fd621eaf9d91327cdabf5f4048cde17cb2eeaffb89",
+      "bytes": 81920
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013526-a25f8d11bcd8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6d85609fda56ecd42e97322016a6ded97a36874dc26106b25b535f0215f7d901",
+      "bytes": 221184
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013597-249fa2cf312c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7b5bdfa1a9690209526a0dfc047222b008feae7977c2150651e2c6a6768679ac",
+      "bytes": 348160
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013612-7d72260395e6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1257b6471628862b44b8e9241312a911e1eaa6459bf7da5407ea320dfa61c20d",
+      "bytes": 159744
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013626-d21019c98f84.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e4e966c161f6469622aa17f63221232ee84c46d6acd57c6a07d60b8e468e858a",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013650-755b4568c1eb.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7b961f569f729cb7efb92fcf0b84740d96a1ef36329f84a0336edb230d54ab28",
+      "bytes": 163840
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013650-a91742d5ff8d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e1a42bcacafb502c76046e3000dcfac73954fdfe93f94306f85f0cc429b6eaa8",
+      "bytes": 233472
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013801-81d7cd7b0871.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8d884d5b24bcba640fdc82b3c054fc64d9426f2dc3f849eaa01ab26d831a6a3f",
+      "bytes": 86016
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013804-9d92781e34ec.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5397b738da3743d964f8378c08468060b1428070101f489b59036e4b7c620e25",
+      "bytes": 159744
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013851-4461de36fcaf.sqlite",
+      "kind": "sqale_database",
+      "sha256": "cb243fd2618bea0f3cc30d0bfccc430686003a5ff50d44c797a14dffd72c5240",
+      "bytes": 69632
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013867-33c3a998f951.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ce058c9d71755a41e378ba66e11fb110aaf788784bb47a2f44e6c24fd926269c",
+      "bytes": 57344
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_013969-7a9f8ceeca0e.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e0d327b9bb75d860846197fb8dcd524765b2146b02abf498132f93af3f1ec911",
+      "bytes": 69632
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014011-94c422863b91.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b1cdcb46ac24c5e6fa32c70836bba32396b5c089af3513b9580af32eb86a5454",
+      "bytes": 233472
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014011-ac370f0cec57.sqlite",
+      "kind": "sqale_database",
+      "sha256": "dfe890106c4d6fc795aa570844cee5ea12886c1d7b61069b58dd38a1849d20c6",
+      "bytes": 385024
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014017-17c1011f8829.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b43750f407ac75b39b477a61d219be97bb3cd71fce9b74e515e14f0970d9fd04",
+      "bytes": 114688
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014030-261b6e145c9b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "cb43018eb4abe01a94a026287807f3986280ff9b88acc4eb420b07afce3ce84c",
+      "bytes": 245760
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014090-5fae842cde8a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1e2a0f1c1ae4de47a9efef59c293ebae8300b891d077815fceb6c0c295e1cbc0",
+      "bytes": 290816
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014153-bcc1f904ca70.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c440a802f2fcaaef0998edcf5b25b00fe9bcf06e10d904d76d0eb11a46c2084e",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014228-02a87c8bef94.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8c2178220dd6c2557a038cd879c0b8500176375c07384a77acd94bafc688e146",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014288-540293801e5c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0865d7b3f9e2d26c425209f23cc34d8a3870abce97dbd1f556710e7d4de165ea",
+      "bytes": 331776
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014288-ec9d638cf763.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a3318dc538949f27a7d94688b53222b43b901495a1d235c6ffd89462163f02e7",
+      "bytes": 188416
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014304-7e921c236ebd.sqlite",
+      "kind": "sqale_database",
+      "sha256": "75b172ebcbff7f711c4bfbcdb87e7c69f2071c1e0149919602b3e98231025605",
+      "bytes": 90112
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014317-b03e4d5978ce.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c88f2775265c4ad647d087c337d6d819c59523b9a232bd750aaf7913984e7eea",
+      "bytes": 139264
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014643-6543d2d93afa.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a1d2c49c2251be8888a3e792b56f05f75de2c666931ea136f0fa2b24f0ac12f4",
+      "bytes": 180224
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014686-780bc6244f31.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1faafed1f9e11ae3e5b62ddf37d6b27a9bc4f7fe3c18cc615260b8ad7116410f",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014686-f6425ad71d55.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e0796e1e21585b41c989986c4b7387736cffcf3df25a6891a8950d9b37a17d5c",
+      "bytes": 163840
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014825-73adfa6dfd5a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "53f45060a5e9214e8b34da222ddfdc23d7093f53229ba0f4853146d4235fc6f4",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014845-a4098a4a5558.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7e90e41a1b04da0b56dac30d639a97fd39855bc26adcf3c7a30037ee29fdd032",
+      "bytes": 167936
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014903-1a4effb09a84.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d07ffbd831f9c72bde29ede49dbc700281806376ba84a6d59f38b3595927566c",
+      "bytes": 36864
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_014915-7ffbd4700cbb.sqlite",
+      "kind": "sqale_database",
+      "sha256": "daf8c037bdb7071ee9fa2ede2719694cd6bf94cab95ecbbc197a53530935bd54",
+      "bytes": 294912
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015224-1fd2542ac977.sqlite",
+      "kind": "sqale_database",
+      "sha256": "480e997cc6c8ec702a9ef2db95491154a40c91a61db61fe333169ad5a6070826",
+      "bytes": 110592
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015324-74a27be396c2.sqlite",
+      "kind": "sqale_database",
+      "sha256": "9ad7cfd4eef1cf584159ca5556b3a681c3dffb9fcc915086ca50194714298492",
+      "bytes": 8192
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015498-e8df9c80c81a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ac42339247adda89bd972b206ace410a6e9056375c93fb600544173e51a3a035",
+      "bytes": 65536
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015499-18cbc1949f9f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "15ade1aac3a9f11345e8d518b3e901dae65c98d15b015b62b0e5005098a3185c",
+      "bytes": 122880
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015560-fd1cbb746d7a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "73183653aa3a4a80e293002f1046770937cd17ccb924b465360a61cd2c13f829",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015600-8eebeece60d5.sqlite",
+      "kind": "sqale_database",
+      "sha256": "4741a9c23f79355561b281dbc6c94ec6ccfacff725dc5e0f39214741b70a374c",
+      "bytes": 229376
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015864-2b2b0c63f285.sqlite",
+      "kind": "sqale_database",
+      "sha256": "946c8bad7e5897a2ab7da7f1a0a6f16f6dfb28dd2046d13b74fa64fd1cd485ef",
+      "bytes": 200704
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015900-b7a107006d91.sqlite",
+      "kind": "sqale_database",
+      "sha256": "787a8e462b6617b210ba941e2e62f5ef415a0e242f8bd087b10ee32b1e732c6b",
+      "bytes": 102400
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015920-94d2d46196dc.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a722574a579ed3be219bfee7e02a559e2f8ce30591511e125cd095e631eaefb0",
+      "bytes": 122880
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015922-ea1ba972bdc5.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a24e1ac800861a0ad6c4030b26d20d329b4ca6cdd77ef70d47e3c7448c714605",
+      "bytes": 229376
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015924-1366588bf230.sqlite",
+      "kind": "sqale_database",
+      "sha256": "f634b3e9aba57bcb9a7abf3d622d64284ab42f2c1b1aced6525a04b0f00826c8",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_015924-e052746060ca.sqlite",
+      "kind": "sqale_database",
+      "sha256": "60a715ff9c5d31129215822eac6cc9814bbdf3061f817bf73a1712195c79524d",
+      "bytes": 110592
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016162-bc9c8cb16f3a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d992a86b54243789fde460878b1df02f8f424c09e3ad62ae8619b3108a9d761d",
+      "bytes": 311296
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016215-341290181fd4.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8396ddc5507b3183a345267a0705f4cc7684598e638026b5cdb52c0c4f3f8d54",
+      "bytes": 86016
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016301-c57d1dc2406b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "9aaaf20e354a601d9be1d1df12537eb27553d9ace0bff722c81360f1b6b181e1",
+      "bytes": 69632
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016454-9f9b448b37c4.sqlite",
+      "kind": "sqale_database",
+      "sha256": "79287414992846915198c53bab4fbcaae82bbc04ea3898d6ae4a88f351e686b5",
+      "bytes": 81920
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016481-7335526ee4a5.sqlite",
+      "kind": "sqale_database",
+      "sha256": "93d55ee95cc8c8277bb4951006833113357a2948a7743b7a1deeff50e78ae333",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016531-9c487e9f5629.sqlite",
+      "kind": "sqale_database",
+      "sha256": "121e312c075db11892870fac4f1be2e673c98d97d6ed2cf07ff8eda9fd7a23e0",
+      "bytes": 110592
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016531-c9d031c6cca5.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a831a41b4a97fe8f2aff4e1b86ad5d61b633279f2311fe2760f5d03a57d6e2fb",
+      "bytes": 221184
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016531-cddd38550c85.sqlite",
+      "kind": "sqale_database",
+      "sha256": "827814495197017c9a8952b063832c086e664f941c7c0e6f853ab26bdbcd82e7",
+      "bytes": 372736
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016550-5e8c526e84f1.sqlite",
+      "kind": "sqale_database",
+      "sha256": "25672bad82bc11320ed96422160ff9299679cf114c909e837803875b7f75f2e8",
+      "bytes": 299008
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016750-7c8fb9a67568.sqlite",
+      "kind": "sqale_database",
+      "sha256": "bbbbee785a4187d03622aad1b28f9379e126eb3f759086164906579796a9ac74",
+      "bytes": 217088
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_016798-6e130e2784f3.sqlite",
+      "kind": "sqale_database",
+      "sha256": "25791d82c2e29764d43bce428fcc983431a1aecada871c1a5fcea52461e309ad",
+      "bytes": 61440
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017074-102f37b3d765.sqlite",
+      "kind": "sqale_database",
+      "sha256": "cd698ec98445901d3ec0a98f2af6723b9f1f85c2837280acd625cace4516f69d",
+      "bytes": 270336
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017110-4c0ab87f3b51.sqlite",
+      "kind": "sqale_database",
+      "sha256": "2061f395d57bb9971c58f3f0b8c07244b131a8fef3f32b4fdca8bf9c84a50795",
+      "bytes": 212992
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017117-940bcd9e3a52.sqlite",
+      "kind": "sqale_database",
+      "sha256": "3a74a244f9ed122b8e0d03a1e0b1e6bc7eb6b366101ad7b7ed92de7bff5f8299",
+      "bytes": 126976
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017136-cd6b147582fc.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b0bfeab8dfe7695b277e168e2d4d66552c9d1b7ecdec7ab68fc04e1f362e5704",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017235-0a5517155c4c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e77bffd44104a6ce70087f127887edb791ddee91782ffc8a1e8443c50b2dacce",
+      "bytes": 81920
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017264-d39789d1c923.sqlite",
+      "kind": "sqale_database",
+      "sha256": "2f8fa505fb4abfd6e8632249193ce75e4a3b5c3fddecfd357b66538727e2a6d7",
+      "bytes": 180224
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017318-33d55f5c2519.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1a9b2cc0d4fb29d23accde2438b74c0ec029ebe9739b173efa273d8e104c84ca",
+      "bytes": 356352
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017390-7c376e69bfbd.sqlite",
+      "kind": "sqale_database",
+      "sha256": "70a94787f9e8d33377d6db0c7e1c464d533efec51238ae32d1b1f724f7d72ec0",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017531-1488a16d08fa.sqlite",
+      "kind": "sqale_database",
+      "sha256": "be5fe9a87ebdb4d3cbbe5f35a2629b74fad1193f0e5f5453419a71c4bcdef923",
+      "bytes": 188416
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017531-1e89bfb9ff91.sqlite",
+      "kind": "sqale_database",
+      "sha256": "bbf7035c9ff82207fada03860e9016424cc95dcfc5f48a3ce4cfeda9d7871b51",
+      "bytes": 229376
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017531-2888cb0e8e69.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ad21be58e87b9d170955c3b7d59b56b6fe72d53ab41a9d57298da1f320ec6706",
+      "bytes": 159744
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017531-49d26127581f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "154096ba79b2cdf99c8fb7340685de545a5d3108fa6dbe0a59aec7a085983185",
+      "bytes": 167936
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017633-4fc39d7185ae.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d8d2510bcf6eb0db4f2af03d7c5053632e736d9df231f204fef7068d30e55ecc",
+      "bytes": 20480
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017810-b5c92ab683dd.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e593495da5b0d5f808437ef8b896f1306ee4af22053be38aaecaa2d5e473c3da",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017816-40a05f928504.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ab52f1ff9d4c18b556f466b2b817992e1457ba565eee2124e111e7ec106ca144",
+      "bytes": 114688
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017887-aeeab27ce636.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a8769087172c708ec45fd65cde7d649036b6b708ba71f2dd5b7da393fd4c4b0e",
+      "bytes": 57344
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017925-3c63cd020690.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0284b12c7e30f2e7cb18198a8cbb5ff3b26d41329f2a4e64a9dc1443bf03daed",
+      "bytes": 32768
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_017961-bafa506bd60a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e10bb61af019249954b5798228dcb60c11ff79bb4add2d026d10720314ef2822",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018002-abfef336e20f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5d23a8023d905dc9fab774c66f00791ef98f2ec65e910e3c48c45b1cfd8f0cfb",
+      "bytes": 397312
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018002-bd6fdaffccf0.sqlite",
+      "kind": "sqale_database",
+      "sha256": "284ff89f910a1609986ae65462db06d42f32c568825465d88fcf2052a39db1cc",
+      "bytes": 270336
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018109-631ab69bb9c1.sqlite",
+      "kind": "sqale_database",
+      "sha256": "9a0e1585a4b228636c18675708e555eae8c3110ddd63f6220044f11cc0846017",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018109-a81744691aab.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e2b86356d4dd6191ef58c32175dee3172b8315e1c32d08f5a2863521a457e48b",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018218-16a79064eecf.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a2c2c121671b622fa7bcc1874c27c4f793e6d6fae1f6e2980ff732158b68cf80",
+      "bytes": 180224
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018218-346ec81565f1.sqlite",
+      "kind": "sqale_database",
+      "sha256": "871318180edd4a5fa020dc7f037bbf020dc392f2a4226cda49c9f7a4299883ec",
+      "bytes": 147456
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018218-6e1398b564ae.sqlite",
+      "kind": "sqale_database",
+      "sha256": "4c948b825fbb03a1e33821b3e5abdfbbd6581bb82feb65fde51529617523273f",
+      "bytes": 90112
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018218-96cbfd73587e.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8079f29bde51743c50de47d2503a4061a59f950bc9f13a34001b85b37612ea8e",
+      "bytes": 65536
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018218-ec94ff3c5e35.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e70fa0a453089b348221c6babdf902518488465fda509b671d22ccd80fb252d2",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018250-1caf448fd18c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ae3b5a0109a20808704ed2a87a88f6e5ecd69d5cbcde9cc7dfafb055486c587b",
+      "bytes": 167936
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018250-349520cfa081.sqlite",
+      "kind": "sqale_database",
+      "sha256": "cf114c583996a669531063c1a25caa18e2b8741ef0048ef8bf18482812af7bfe",
+      "bytes": 282624
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018339-cb2e34c5d943.sqlite",
+      "kind": "sqale_database",
+      "sha256": "19e27d5c274561f4e7381a9eae0ba119739cedbe3492f203a3a33d6000b1c4b9",
+      "bytes": 36864
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018459-337a96e5b9e9.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e6cf932bdf514f34c76b1bf8361efb7e09aea82208be9b31d6729bcdf3d48f83",
+      "bytes": 188416
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018510-4f1eeb077d8b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8177cd48ae86ecec6b280908fb6b8a15fd839b2e5452a4e73fc2149107d61b49",
+      "bytes": 86016
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018514-e12fb3bac7b6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6a29110543683b678cf5b6dbde5ea84126650c0d96c8f6ac847878bdc388485d",
+      "bytes": 200704
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018802-37a8593857dd.sqlite",
+      "kind": "sqale_database",
+      "sha256": "938d4ee093dc2ecad096b1861210c4dd4a68d007b3857509fdf9a4cd48b78708",
+      "bytes": 73728
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018873-5a61bdac81e9.sqlite",
+      "kind": "sqale_database",
+      "sha256": "4f25d4f413634cd6c69d3ab4047b542c7a67a35ce16599e6b2e6f5b498e15900",
+      "bytes": 188416
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018917-4e24e9e2bb83.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a73c4663fe0da98c3c22b00d60112ad6ef826bbea61d2f10a0d503bbe8ede6c4",
+      "bytes": 249856
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018917-c3462b46c99f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "063ad23f08a40ac2a1ab7ba28dd731ef8b0944189f31cda73b602fe749a4a074",
+      "bytes": 311296
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018924-6389360c2de1.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b8ff2f1515efc48396d07186f935dfce58ab9b2fa421a97ef504bdbf99b90682",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018976-1cebbacbae28.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0853f95878f075f368071d106516996f189af43756ea754a8ffe964b025cd49a",
+      "bytes": 135168
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018976-3016c3474e4b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "592cb499ef5e90288091ecc03c41724efad89d7c330c7bd311a95aba25a023f8",
+      "bytes": 147456
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_018976-c16995a4762d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7f61107108c8a4a4dabdcf9c75804111bc62a1db228b57ed24922aeaf2fa2ac4",
+      "bytes": 61440
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019069-b856cbfa5a2e.sqlite",
+      "kind": "sqale_database",
+      "sha256": "34be4a7965cbb96fd8f8ed303d433639e45ffb7cd41cba8e03bf13b74d9efaba",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019089-b24daf03376f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "be785f5ceb07f3b7d8847a2ee69cad34243cb2991d7126f2979d07bf5e959eea",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019089-bc9e6d315af1.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d66b29b2ee1a0e022d2dd3d400e90cc578bae31db0e1ca21ae18f9c4eb3547fd",
+      "bytes": 45056
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019089-daca7ae875e2.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5d42ade14379e0d3be9c49f8421726816e563ba96ff9ad0f51b2a59366c50c01",
+      "bytes": 106496
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019135-02b0b5667ec8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e5d72f5d91235daf0d9cf7b470cf7da5a8d66d12e32f514466c631ec4362e4c2",
+      "bytes": 65536
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019148-0e7f6d78cd23.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0dc15d76aa174df31cc2627ec9489793318d241c04b1a815735776bde18e4b3b",
+      "bytes": 200704
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019148-e111dc40e35a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b8d529415f8767e5b68a3c0971688db086bad4edcccf180fd69029e51576dcd9",
+      "bytes": 176128
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019232-be94ee25c7f7.sqlite",
+      "kind": "sqale_database",
+      "sha256": "3e35a678b278d6d67263dd08f5a84b6647fb5b2c4d20d48383020d739d65f52b",
+      "bytes": 57344
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019257-47b76a07328d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e516d39594891c5a8aec5d47120b58d0c402391e2f0ba24560adc05290fd6b72",
+      "bytes": 229376
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019258-92ae45519971.sqlite",
+      "kind": "sqale_database",
+      "sha256": "40c9ebfae15120b133e5f76d303f6213f200e2b4d9236427b5b6b1f2bca3ece8",
+      "bytes": 241664
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019258-b020f1087882.sqlite",
+      "kind": "sqale_database",
+      "sha256": "98934c180c1c25790ac85c4ed8fb04cea948616d528fbab11c0b4eda2a9c8c94",
+      "bytes": 258048
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019336-1aa94a32de10.sqlite",
+      "kind": "sqale_database",
+      "sha256": "86afbe07250984ea61a2c573e03535d3d8b9c3e58afd2cbf2b4278b50925d5df",
+      "bytes": 253952
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019377-b4fd50cd232d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "2959454a3310f408a23c240d0a30cd2f25122f0266a04face04a1b16ffc88e7f",
+      "bytes": 12288
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019407-49432259998c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "078def778bb742c5545bd96204f1b14be9adeb3e87dbf6143b94f70de8f37ef5",
+      "bytes": 40960
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019407-c9fced9c51c8.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b40d80e2a28dd99ab9828b4e96562129fdeffb9cdc8745f3d69e62a6aa99ce49",
+      "bytes": 32768
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019492-2e3a65c1e36b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "22d81b98f2c5192f7a654e69a17233080a3ece6535a2e914d7277bb96b01a921",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019609-40e7d63d8c28.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e2e180fedfb55a77c0e83fb3b82ccbac084b29f9e3893a0703094afc3bdb4d8f",
+      "bytes": 139264
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019609-51f253d80936.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d4dff4ecc52ff3ce2c401dffb5304879c7c4bd494177b294e06a3de38ac0ada7",
+      "bytes": 176128
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019768-8258493b706e.sqlite",
+      "kind": "sqale_database",
+      "sha256": "7e5b99556dfa90dc074c4fbbab99af866dc82231223d48b2c93cc9c5c657a1f6",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019802-f8f34ae97933.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a56dc44302b430ff2ddc6f4f1579d26c57188b83fc55e7d87bdd00c3cfe4b55a",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019868-f6d0d78e620d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "fffdb266668725b5c4f9be1796785d0ee44a2ab0aeffe3010c0a8e0a5c5fac47",
+      "bytes": 356352
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_019996-4f1d4c582932.sqlite",
+      "kind": "sqale_database",
+      "sha256": "727fa18b395c864ed4ab2240fd7d7304a9db18121017ca3ddbfa32768d950a3a",
+      "bytes": 49152
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020040-2e4424616d9f.sqlite",
+      "kind": "sqale_database",
+      "sha256": "064b7e792a9009e51745e54437433d4e406dcb77cb7c2f9bb30d1241b0142f72",
+      "bytes": 90112
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020049-d478812bc8a9.sqlite",
+      "kind": "sqale_database",
+      "sha256": "40a1e53b1b1783eb3eef090d2acd4bc7e3e0c727548749e0a2c88a02ed01e91a",
+      "bytes": 131072
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020089-9e16d13afc24.sqlite",
+      "kind": "sqale_database",
+      "sha256": "62e88c64f7d3a17a32acb3a22bfc3474cbd6f7196bad5c236b5046de5683947d",
+      "bytes": 245760
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020210-f8d7e6025f2a.sqlite",
+      "kind": "sqale_database",
+      "sha256": "1db7e0fadb5807372d74da67533c23cb0c9c401728f6c877402b56ee82faba16",
+      "bytes": 167936
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020377-4ea69b982c04.sqlite",
+      "kind": "sqale_database",
+      "sha256": "097b449a1e21a9ef38656571802b73a79d996435761d3edfc94272892740e026",
+      "bytes": 401408
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020392-3747be952fba.sqlite",
+      "kind": "sqale_database",
+      "sha256": "92a638e683298826ba164df3b51b3bc01db15b3dd57da4bd283b98ace0226ba0",
+      "bytes": 159744
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020438-251eba70e7bb.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d72f150115717d75a0edca5d32f2b90b5babb107f18181121a248cf98f4842f7",
+      "bytes": 65536
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020617-466ab6f93f87.sqlite",
+      "kind": "sqale_database",
+      "sha256": "89788090f0ac760df21668fa4af08c199d20b241488cdd4e62b5196b6e647407",
+      "bytes": 188416
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020636-54a1284190dc.sqlite",
+      "kind": "sqale_database",
+      "sha256": "234ff5592146a32f9dcdf7d91b75b25abe8c266b96e0892ee49f0cc291b8330e",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020683-73882f5c7b28.sqlite",
+      "kind": "sqale_database",
+      "sha256": "6b169ac764dd46a5e0fa116861231bb813abe8e92d57b5befb9ded0fe1b95ae3",
+      "bytes": 253952
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020849-2d985c3718f7.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a9c17a9a82d68312a2d72a1024739849ed57cb7221df76ef3f71e350b0da9d5d",
+      "bytes": 159744
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020849-aa10aaecf39d.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c1f58f636e8e14e386b74d1e027ccb716cbb1d2a917b632d7c9c1723ab921041",
+      "bytes": 90112
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020885-074e7b99a1f5.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a15915fc06f00aeba3f86743cbff1ea2b0714c22c347df7604f04595492d14de",
+      "bytes": 86016
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020885-8103bf23accd.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c113a0a07b45c0cc3b89a68c31988f81c704c8571b8a4657d81464b15c77572f",
+      "bytes": 180224
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_020908-e84159d227d6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "32fa6c728f6a744715ef6defdd1baf53d9df92c137a9db16d7145596e413e173",
+      "bytes": 65536
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021091-3dd930469227.sqlite",
+      "kind": "sqale_database",
+      "sha256": "0fce997babfc88fd81114584526810958573ffddea855c4641b6a29a7d0f25a4",
+      "bytes": 77824
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021179-8078845440b0.sqlite",
+      "kind": "sqale_database",
+      "sha256": "b4be87d600d0b93c2b1ca5c542d1f532e1b8592bc2e631817be31f2bb8aa0198",
+      "bytes": 53248
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021227-0f2202030e2c.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c948f64bbe079f020629ad0d03f2937cdf42265594967fff5f0dc19058fdace7",
+      "bytes": 241664
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021261-bf6a0f49f93b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "f5928cde0c4365839187c02617040848eab3cf95b4f934cc00f85c59737bb135",
+      "bytes": 110592
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021261-e657fb792fa3.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5ce8764a3070c4de0ea68107b13852aa16e4f682aa40630d5130ca55b67845ac",
+      "bytes": 118784
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021322-436dcca6dd0b.sqlite",
+      "kind": "sqale_database",
+      "sha256": "5ac42550fa1cabae8477137653c8b145c8bb25f3d982863654a701eb4908fe3b",
+      "bytes": 499712
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021322-636c703cb3e9.sqlite",
+      "kind": "sqale_database",
+      "sha256": "2c4678d2ca6ffb2edb91d10aee788b07f36902f70ce0becd908b730ab6120fbd",
+      "bytes": 536576
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021322-a8344feec253.sqlite",
+      "kind": "sqale_database",
+      "sha256": "4cec234e7c4cda18dca2193ac80ef4e54070dae5fd19aae05f7c6f686d7eaca9",
+      "bytes": 204800
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021326-27d9d7937ad5.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a47a3617d471cde5d01e4ef328dcc98b65b36eaef3cc8d32375ddf93274497be",
+      "bytes": 20480
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021348-163d434d2086.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8403bb0e5ddbee37661230305c150ac417e24a4e2eb8c4b28a3f78f3a2afa332",
+      "bytes": 40960
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021464-a13059c02b75.sqlite",
+      "kind": "sqale_database",
+      "sha256": "8ace23c776bd81451fca0016124cd0b0056d33cf3d47b0d5b06f396c5ca13bb2",
+      "bytes": 274432
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021464-adaeb274e7bc.sqlite",
+      "kind": "sqale_database",
+      "sha256": "20f5eae8f438e23202141a2912bd84207639ac0869b99668a5b73cbf96e308c9",
+      "bytes": 442368
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021506-7d5b603c4358.sqlite",
+      "kind": "sqale_database",
+      "sha256": "80881874a2f1a901cafd89f3988adfab82dcc55b7324410ea13e1c482dae9eb7",
+      "bytes": 184320
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021506-a737fcb02002.sqlite",
+      "kind": "sqale_database",
+      "sha256": "d27a47d00504afbccc1f700fe00a2b32e3ce2a8f9bfdb7c8153e49e68569542e",
+      "bytes": 57344
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021558-a90dc16f3da2.sqlite",
+      "kind": "sqale_database",
+      "sha256": "ed07f5b6e49ae1d64e85422bd4bc91e14077c23c604444683af2135a2a267e8f",
+      "bytes": 180224
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021699-35382ef160ed.sqlite",
+      "kind": "sqale_database",
+      "sha256": "65a278dbe415af2b30c0c564b68a8603b94f43303558dda84a1a100b7baa7311",
+      "bytes": 57344
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021699-7863e7779143.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e8fb9e604e2198390b932a893eacba7c01b59747c316d2e734fff300462b045e",
+      "bytes": 81920
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/schema_021908-6e494a16a6c6.sqlite",
+      "kind": "sqale_database",
+      "sha256": "24c3a772eb489b32bfbe13e002a41f37991ac58a91fa631332114340011ca02c",
+      "bytes": 151552
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/shop-101.sqlite",
+      "kind": "sqale_database",
+      "sha256": "f0c18dbf3353b931f4ef860cc0e824a95174eb9beb9c04c421df6d16846cc72a",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/shop-1101.sqlite",
+      "kind": "sqale_database",
+      "sha256": "2f653f96979af8f3194288288680e3742f04cbc776044d31573e35d3be4d4f54",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/shop-1102.sqlite",
+      "kind": "sqale_database",
+      "sha256": "3c5434b24296bb71834ffd03de65b616786390340bac6440531f024eadca10ff",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/shop-1103.sqlite",
+      "kind": "sqale_database",
+      "sha256": "c750049df47cea341133de08dd19d1b4dbd4cdb3a3ab2175f4ae07570ea920a1",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/shop-1104.sqlite",
+      "kind": "sqale_database",
+      "sha256": "cd96cc26f39f88d8bf9d597b9d0f3100ff6bfc1f9d29229a3282c653389535de",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/shop-1105.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e43b5d97b2221ebaafff2596fd979cfcab5b6db778a25b311ae0febba766ee39",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/shop-1106.sqlite",
+      "kind": "sqale_database",
+      "sha256": "e26aa635b9013ca0c11ee649a9b2290aa1372bc0e748f7711a8d4a191da28b49",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/shop-1107.sqlite",
+      "kind": "sqale_database",
+      "sha256": "a8c88ea0b7dc274db1096cf3498782c77cc70e37709079e4be7e2e7a7316b4ca",
+      "bytes": 98304
+    },
+    {
+      "path": "data/sqale/data-build-v3/db/shop-1108.sqlite",
+      "kind": "sqale_database",
+      "sha256": "cbe4a989d9d8564e0123d3ae1fdd9a3c11d60959ab0faa42c9af7cd60ef77f8c",
+      "bytes": 94208
+    },
+    {
+      "path": "data/sqale/data-build-v3/dev.tasks.jsonl",
+      "kind": "dev_tasks",
+      "sha256": "db613ff79c2b08753d13f5624ea1950d830aa259b8e35a9f1434409001358716",
+      "bytes": 346247
+    },
+    {
+      "path": "data/sqale/data-build-v3/train-500.episodes.jsonl",
+      "kind": "training_episodes",
+      "sha256": "b34bbd824142b955f02375deb26bf1d09e75107c425feb16180e2b6d2818fe3c",
+      "bytes": 3584733
+    },
+    {
+      "path": "data/sqale/tokenizer/config.json",
+      "kind": "official_tokenizer",
+      "sha256": "458a9265b6a96e5ad4bbe1857716bd69e434f062f8b32fae48f5f06197d26384",
+      "bytes": 1961
+    },
+    {
+      "path": "data/sqale/tokenizer/source.json",
+      "kind": "official_tokenizer",
+      "sha256": "d93c639226aa3bb8e34b9ee970317eb85827a2c0911d4b4a712c7795a4749f5e",
+      "bytes": 665
+    },
+    {
+      "path": "data/sqale/tokenizer/special_tokens_map.json",
+      "kind": "official_tokenizer",
+      "sha256": "2b7ce39630f8a18705331a9b32c3b2236e96e7410791f98a9f8b6494e3ab2ea6",
+      "bytes": 567
+    },
+    {
+      "path": "data/sqale/tokenizer/tokenizer.json",
+      "kind": "official_tokenizer",
+      "sha256": "2227ea9c52e8afb3f98bfed2679008b275f2664de69dfde174b374389eb0225d",
+      "bytes": 21376527
+    },
+    {
+      "path": "data/sqale/tokenizer/tokenizer_config.json",
+      "kind": "official_tokenizer",
+      "sha256": "fb56a3ef7659346aae196a2ab877355f1e7fd871c36843f709bb2e23c606d972",
+      "bytes": 8169
+    }
+  ],
+  "source_sha256": {
+    "experiments/sqale-sft/AMENDMENT-4-run-inputs-and-control.md": "574d69e892521af67fdd5ffa863cdad1109296eb862679d1d4ce5763b5d0ca09",
+    "experiments/sqale-sft/AMENDMENT-5-table-reads-and-manual-audit.md": "a6ae7c14e2d3ec64243648de586f0bdb095592492948c3ed6ca5f39d5031b42a",
+    "experiments/sqale-sft/AMENDMENT-6-selected-logits-g0-02.md": "947e200da856bb7da4b3eff9b8347d36cf2f19c8e1840717a7a59dc363af5c71",
+    "experiments/sqale-sft/AMENDMENT-7-a500-stage.md": "d9390b0a409f394767ecaca88e95fbbacd4a08976ddf86706c29893dc4977bd0",
+    "experiments/sqale-sft/RUN-POLICY-v1.json": "7012d5357fd4518bdcd2dcca83165a7560a28ccd6806113e08111499cc31362e",
+    "pyproject.toml": "f2b9fc676f8afacbacaf9906bd35caec1b81f367477b02f17cd0bdf6500008ea",
+    "requirements-sql-runner.txt": "bc18cda4a5d317710d549a681a1a846df333b59a5e259f7660f550897b5c7d84",
+    "scripts/prepare_sql_a500.py": "451e047b089e83c8ccd69980f7711b98b25e2906f7a7199f415fad2c7e362cee",
+    "scripts/sql_job.py": "01dea3c997c227cef7f12413d4fb4a556674ed44d99d7bef1f323a5ede466f78",
+    "src/ayadb/agenttune_sft.py": "08c5165672f23f44d816280428fdd32686afe06a081d93d121db2b847c6fdb9e",
+    "src/ayadb/birdprepare.py": "f35bddaac886d465e77e77c87e96430001983d81ac1aa7269e147d52d18ccc74",
+    "src/ayadb/birdverify.py": "c1dfa83dde0ba289d20b6b1039cfeb8a0294b3f16c88e275d3ae01c04e9c7340",
+    "src/ayadb/compare.py": "cd6c37cd0c8bc8a2ccc9794e5a313ed4d94a38161a31b6ee111792d5a3f202cc",
+    "src/ayadb/continuation.py": "092844ec93f269390d72a6f8de2760dd877fd28f488e0a48751417916b3b5ac1",
+    "src/ayadb/engine.py": "d8ed2868b64968b6126cf99c4c060c646a7a6385b51afbe530443d03894c257e",
+    "src/ayadb/env.py": "a2f8004ffdfb2cbe01461aed98ece5239d0c12000421370b37f86bf88472982e",
+    "src/ayadb/expert.py": "5d9fb3407cb59b3c4b6893b5c99b797da5ea656f541ee4d47a30b4dc4981bbf1",
+    "src/ayadb/gpumemory.py": "6d1919e9bd05761e270de2ff83d4edf027e26c9db891845740ce73ac94049181",
+    "src/ayadb/kcheck.py": "fdaefb47279d62bf1d5e9af6d6af6ae85de4150371d23c2e63d37412ee2c65a4",
+    "src/ayadb/lastposition.py": "5fe245804675f6ccf3d1836fd0d65b08b4ac95f72fee0ef180d656ff5935d4e0",
+    "src/ayadb/losscheck.py": "f84e71346169c34b4083ce403907f4f356e0c53bd257b7c6438c3439906c419c",
+    "src/ayadb/manualaudit.py": "e26f5c6334869c80cddb1de58de85e076a260afaee7877099ba9a55be0e2c916",
+    "src/ayadb/metrics.py": "375ae5fafd789603facefa17b74b871809922c1c70b368f6705d11a899729342",
+    "src/ayadb/positionloss.py": "4fa7303a991866d84add12df42955ef028c811787bff1b95a2e6e89c0a9748a0",
+    "src/ayadb/promptquality.py": "af6e528a9207a8b50511cb8767e3b3469f8f0abb3f2b6eb2fc2e1ebf843804e7",
+    "src/ayadb/protocol.py": "816d0dede8d3553f94179d4a6f8e60394f10680ea61c200d63ce7decfee81792",
+    "src/ayadb/runconfig.py": "c7f5e1b4ff1f199326941bb358872b114a8324111de06c0181c48ec6206a39c8",
+    "src/ayadb/runinputs.py": "9e5a17fde9550f54af6cbc2def0c1968235e1c3a96b79a0d6dfccdd2784fc915",
+    "src/ayadb/runledger.py": "f57104b7206ea40e94b30c67eb9e6f1f97533d42089f6d3e4107b881f91789a2",
+    "src/ayadb/sanity.py": "40422414bcddcd187b0535d68f7e5249a81e1038a807efb353d77c62db52860a",
+    "src/ayadb/scoreraudit.py": "dfb3d7eef9bb66cba764ed6e8a2374e8b717a4fd6ddcdfa58d8eb4bbe9728e05",
+    "src/ayadb/selftrainfilter.py": "15843b2bf9fb0536e912fd8ff55579b9aa13abfb974c92102bd22651977c2db8",
+    "src/ayadb/sft.py": "09754ba69a8793471f95fd7e33b18bb24d66caa925a525c3dc4b372c0618b31e",
+    "src/ayadb/sftdata.py": "b2f58df540fbb2a6be39a4398c560bcb6925c49b282aa37b0b1aa6b431f01d13",
+    "src/ayadb/shopprojection.py": "bd09f72fabd3ec7deb7503dcd7b8986f853fa272e01dcfcfef0ef950054b4aee",
+    "src/ayadb/smoke.py": "523d9127e2df64d9fe8548c482c6a5c25cd19efee3e34798c56944163f44442c",
+    "src/ayadb/sqalebuild.py": "f7a79bee1b60e3ef7564cebfb3f41e8b28b99f35ec8a967152d3851ccc4d8dd2",
+    "src/ayadb/sqalebuild_v3.py": "9b5bce037612648c5305a09a5af85c1969f669743139f7f54d26f3218af44474",
+    "src/ayadb/sqalecomplete_v3.py": "919a103d60658562fb19c300317477de050e984d6234f2900e2f8ceb85a943b7",
+    "src/ayadb/sqalepool.py": "cecd15871dff799776e129aed137410fafc6b10f9393249258844bc7dcc4f075",
+    "src/ayadb/sqaletopup.py": "4a3089f81b770dab56a6b5bbfbcbc94fa2f9adf859429ad138dcbf36b24a1db1",
+    "src/ayadb/sqaleverify.py": "cf511edb52164615a8e9b4d056b0c95f4cfc950ec53c03c57e50810887a5283f",
+    "src/ayadb/sqaleverify_v3.py": "f449f6577b4fbdab58d0567a170583efe2e391403344ca5d74fda8620e5cdb4b",
+    "src/ayadb/sqlenv.py": "10ff3982daec30885f9034a5f6f6e6afb204309605e394cc0a221dc5ad611444",
+    "src/ayadb/sqlguard.py": "ff940bf0728719e9248fd927c1b0538886209ad7308877f3681b8778f555fbb9",
+    "src/ayadb/sqlmutate.py": "21d130f09cde38edfe146310057b820f80773749b3b643e16528f95e4d4bf331",
+    "src/ayadb/sqlpolicy.py": "174e29616351dab661383bb42defb75c657f638ecc16344e371d28109a450f1c",
+    "src/ayadb/sqlrunner.py": "446fc99db39da4926fc12097a9249b5e71d34a8965644b96ce6eef787603a637",
+    "src/ayadb/sqlscore.py": "d6ff31ebbb0bf164528c7604c9647fc6066e9e701531108f73e7430a00ad386a",
+    "src/ayadb/sqlsftdata.py": "a80dfa67c2f02264213098c3ab1df52674148941956f22a56c02bb1c6da19afa",
+    "src/ayadb/sqltraining.py": "8a57ef0fc4164a8949c4d54d1bab42966b0319c81e4151d9a9231d429b9e0d1a",
+    "src/ayadb/tasks.py": "094444db7e197ad88a448d2081a8416f490e7afbecfdba545eade0dff3043b1c",
+    "src/ayadb/tokenbudget.py": "88902de1863e1e603dc7c167b42a90437e2f5b527c25d4f55cf77878eea9b470"
+  },
+  "training_plan": {
+    "source_sha256": "b34bbd824142b955f02375deb26bf1d09e75107c425feb16180e2b6d2818fe3c",
+    "policy_sha256": "7012d5357fd4518bdcd2dcca83165a7560a28ccd6806113e08111499cc31362e",
+    "train_examples": 475,
+    "validation_examples": 25,
+    "train_input_tokens_per_pass": 847065,
+    "train_targets_per_pass": 107381,
+    "validation_targets_per_pass": 5162,
+    "a_unique_train_targets_per_pass": 107381,
+    "minimum_unique_verified_b_targets_per_pass": 10739,
+    "expected_optimizer_updates": 60,
+    "max_train_input_tokens": 3849,
+    "max_validation_input_tokens": 2695,
+    "fresh_local_encoding_verified": true
+  },
+  "forecast": {
+    "training_hours": 1.77,
+    "training_usd": 0.71,
+    "dev_screen_hours": [
+      0.33,
+      2.21
+    ],
+    "dev_screen_usd": [
+      0.13,
+      0.88
+    ],
+    "basis": "t4-small $0.4/h; training at 266.5 tokens/s measured on one 4,072-token example; dev episodes at G0-02's per-episode times (3 tasks each). Planning estimates, not caps or measurements.",
+    "uncertainty": "Throughput comes from 3 updates on one 4,072-token example; the 500 set averages ~1,783 tokens per example (less attention work per token, more fixed per-microbatch overhead). Dev times come from 3 tasks. Treat both as +/-50% until a full stage is measured."
+  },
+  "pass_criteria": [
+    "account, rate, pins and private upload verified; every training and dev reference passes before model use",
+    "fresh factory encoding matches the frozen 475/25 plan (847,065 inputs, 107,381 unique targets per pass)",
+    "60 finite committed optimizer updates via the AgentTune factory, none skipped; ledger covers all",
+    "validation losses finite; GPU memory events after load, every update, completion and any OOM",
+    "the dev step reloads the final adapter and its tensors exactly equal the saved step-60 adapter",
+    "95 dev episodes with one finite projected inference position; AuditKIT agrees with every saved score"
+  ],
+  "abort_criteria": [
+    "wrong account or higher hardware price",
+    "CUDA failure/OOM/nonfinite loss/skipped optimizer step",
+    "input/mask/plan/checkpoint/reload mismatch",
+    "sync failure or byte cap",
+    "step/job timeout or stalled output",
+    "missing memory measurement, full-prompt inference projection or AuditKIT disagreement"
+  ],
+  "reporting": "Strict, fallback and set dev accuracy, submissions and no-table counts, tokens, time and cost are reported whatever they are. G1 and the 1,500 stage rule are computed only after both this run and the baselines run finish."
+}

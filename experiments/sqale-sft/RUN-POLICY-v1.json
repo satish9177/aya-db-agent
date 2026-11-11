@@ -1,0 +1,15 @@
+{
+  "version": "sqale-effective-inputs-v1",
+  "source_root": "data/sqale/data-build-v3",
+  "seed": 42,
+  "validation_share": 0.05,
+  "excluded_ids": {
+    "schema_002019_s0_q7_77f278d756": "training entity-description fragment, not a database question",
+    "schema_019377_s0_q0_bdfd8dfddf": "dev scalar subquery chooses scan-order-dependent row",
+    "schema_014139_s2_q6_94d6ad5d55": "Q2 scalar subqueries can choose scan-order-dependent hotel",
+    "schema_016173_s2_q7_28eaa6d2e0": "Q2 LIMIT inside CTE chooses scan-order-dependent tied resource"
+  },
+  "control_fallback": "minimum-question-drop-v1",
+  "gate_share": 0.1,
+  "bird_usage": "final_only"
+}

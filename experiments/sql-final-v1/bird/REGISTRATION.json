@@ -1,0 +1,322 @@
+{
+  "id": "final-bird-sql-20261109-02",
+  "stage": "final",
+  "format": "sql-submit-v1",
+  "expected_account": "hf-user",
+  "hardware": "t4-small",
+  "max_price_per_minute_usd": 0.006667,
+  "stall_seconds": 1800,
+  "checkpoint_sync_seconds": 60,
+  "max_output_upload_bytes": 1073741824,
+  "model_config": {
+    "model": "CohereLabs/tiny-aya-global",
+    "model_revision": "af89d219b53ed9b13b8a4645f9c8028973510324",
+    "tokenizer": "data/sqale/tokenizer",
+    "dtype": "float16",
+    "quantization": "nf4-double-quant",
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "max_input_tokens": 4096,
+    "context_tokens": 8192,
+    "max_new_tokens": 512,
+    "tool_steps": 8
+  },
+  "scorer_policy": "table-read-v1",
+  "inference_logits_to_keep": 1,
+  "required_environment": {
+    "PYTORCH_CUDA_ALLOC_CONF": "expandable_segments:True"
+  },
+  "no_teacher_or_paid_api": true,
+  "artifact_retention": "Pull and review promptly; keep this run's private input/output prefixes at most 30 days without renewed storage approval.",
+  "status": "DRAFT_AWAITING_EXPLICIT_USER_APPROVAL",
+  "amendment": "experiments/sqale-sft/AMENDMENT-11-final-and-self-training.md",
+  "amendments": [
+    "experiments/sqale-sft/AMENDMENT-11-final-and-self-training.md",
+    "experiments/sqale-sft/AMENDMENT-12-sqlite-version-drift.md"
+  ],
+  "supersedes": "final-bird-sql-20261109-01 (job 6af1536ce6320c66fad7d6ea stopped at the reference check: SQLite 3.40.1 operation counts; amendment 12)",
+  "job_sqlite_version": "3.40.1",
+  "scoring_limits": {
+    "seconds": 60.0,
+    "max_ops": 2000000000
+  },
+  "selection_sha256": "b985c053735c274c49e1961c9598bc14aebe4cc6a5281694ce37f1426b6c018a",
+  "finalists": [
+    "base",
+    "a1500"
+  ],
+  "max_input_upload_bytes": 1879048192,
+  "first_month_storage_reserve_usd": 0.1,
+  "timeout_seconds": 57600,
+  "budget_usd": 6.51,
+  "authorization": "Draft only: the user's explicit approval must name this SHA256 and cover its private uploads, one job and bounded storage",
+  "scope_exclusions": [
+    "any training",
+    "Pilot or other models",
+    "error-feedback tools",
+    "the spent shop test (data/test.jsonl)",
+    "dev or Q2 tasks",
+    "automatic retries or extra jobs",
+    "hardware change",
+    "push/publication"
+  ],
+  "steps": [
+    {
+      "name": "bird-base",
+      "action": "evaluate",
+      "tasks": "data/bird/final-v1/tasks.jsonl",
+      "purpose": "final",
+      "selection_file": "experiments/sql-final-v1/SELECTION.json",
+      "selection_sha256": "b985c053735c274c49e1961c9598bc14aebe4cc6a5281694ce37f1426b6c018a",
+      "out": "runs/sql/final-bird-sql-20261109-02/bird-base",
+      "adapter": null,
+      "samples": 1,
+      "temperature": 0.0,
+      "seed": 42,
+      "inference_logits_to_keep": 1,
+      "timeout_seconds": 16269
+    },
+    {
+      "name": "bird-a1500",
+      "action": "evaluate",
+      "tasks": "data/bird/final-v1/tasks.jsonl",
+      "purpose": "final",
+      "selection_file": "experiments/sql-final-v1/SELECTION.json",
+      "selection_sha256": "b985c053735c274c49e1961c9598bc14aebe4cc6a5281694ce37f1426b6c018a",
+      "out": "runs/sql/final-bird-sql-20261109-02/bird-a1500",
+      "adapter": "remote/hf-sql/hf-user/a1500-sql-agenttune-20261108-01/training/adapter",
+      "samples": 1,
+      "temperature": 0.0,
+      "seed": 42,
+      "inference_logits_to_keep": 1,
+      "timeout_seconds": 57600,
+      "verify_checkpoint_reload": true,
+      "expected_checkpoint_step": 180
+    }
+  ],
+  "assets": [
+    {
+      "path": "data/bird/databases/california_schools.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "c0903eec662e63068fd1d14403d3d6c1d473287fc10c4356333ea58f878db983",
+      "bytes": 11116544
+    },
+    {
+      "path": "data/bird/databases/card_games.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "c98bdb57fe7474da798b407785544b9af0daaad5d61fd21e2a73309493bc1227",
+      "bytes": 261820416
+    },
+    {
+      "path": "data/bird/databases/codebase_community.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "92101be6d2a9f6adceea59d38f6d1c556087f9eea1432432a21268cb1348036d",
+      "bytes": 481419264
+    },
+    {
+      "path": "data/bird/databases/debit_card_specializing.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "b3d149ad05746dbbe5116e229e17e18f09c39db43cf117d9ef3441753608b691",
+      "bytes": 34635776
+    },
+    {
+      "path": "data/bird/databases/european_football_2.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "f72f5c9b990371417288a67b27a02e601ef904d45525c2c9f7931fb01001c536",
+      "bytes": 597754880
+    },
+    {
+      "path": "data/bird/databases/financial.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "d15d89cdb068a202b6f2b99342af44dffc1d52545b39ceaf62efdc0ba570101e",
+      "bytes": 71294976
+    },
+    {
+      "path": "data/bird/databases/formula_1.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "79770caf966707e35516fa566e24b40ae515c74ec1ec4631235245645b87b24d",
+      "bytes": 22360064
+    },
+    {
+      "path": "data/bird/databases/student_club.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "eb89bcfe97eefa386a27904ec5aa15159811a7eac894ec659a36e48fa9f76b77",
+      "bytes": 2641920
+    },
+    {
+      "path": "data/bird/databases/superhero.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "75e94a2c3236ee3bb2c01fb97a1c4b4c1c269bcefd4eab1d04be323d2d0825b1",
+      "bytes": 237568
+    },
+    {
+      "path": "data/bird/databases/thrombosis_prediction.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "87583183c3dc472fba04de702965560a9d7c0a548836613f242317e0eeb83f00",
+      "bytes": 7327744
+    },
+    {
+      "path": "data/bird/databases/toxicology.sqlite",
+      "kind": "bird_final_database",
+      "sha256": "4df4094208e0799d5e5f0e2b5bc5c415cf87b1208ebaf8f4c14c7af445b682c5",
+      "bytes": 2678784
+    },
+    {
+      "path": "data/bird/final-v1/tasks.jsonl",
+      "kind": "bird_final_tasks",
+      "sha256": "c79978cbc0445ee5aeb9294909e51445a0e58afa8adbc9ff4e5301d38b1b7f6b",
+      "bytes": 1237194
+    },
+    {
+      "path": "data/sqale/tokenizer/config.json",
+      "kind": "official_tokenizer",
+      "sha256": "458a9265b6a96e5ad4bbe1857716bd69e434f062f8b32fae48f5f06197d26384",
+      "bytes": 1961
+    },
+    {
+      "path": "data/sqale/tokenizer/source.json",
+      "kind": "official_tokenizer",
+      "sha256": "d93c639226aa3bb8e34b9ee970317eb85827a2c0911d4b4a712c7795a4749f5e",
+      "bytes": 665
+    },
+    {
+      "path": "data/sqale/tokenizer/special_tokens_map.json",
+      "kind": "official_tokenizer",
+      "sha256": "2b7ce39630f8a18705331a9b32c3b2236e96e7410791f98a9f8b6494e3ab2ea6",
+      "bytes": 567
+    },
+    {
+      "path": "data/sqale/tokenizer/tokenizer.json",
+      "kind": "official_tokenizer",
+      "sha256": "2227ea9c52e8afb3f98bfed2679008b275f2664de69dfde174b374389eb0225d",
+      "bytes": 21376527
+    },
+    {
+      "path": "data/sqale/tokenizer/tokenizer_config.json",
+      "kind": "official_tokenizer",
+      "sha256": "fb56a3ef7659346aae196a2ab877355f1e7fd871c36843f709bb2e23c606d972",
+      "bytes": 8169
+    },
+    {
+      "path": "experiments/sql-final-v1/SELECTION.json",
+      "kind": "frozen_final_selection",
+      "sha256": "b985c053735c274c49e1961c9598bc14aebe4cc6a5281694ce37f1426b6c018a",
+      "bytes": 1553
+    },
+    {
+      "path": "remote/hf-sql/hf-user/a1500-sql-agenttune-20261108-01/training/adapter/README.md",
+      "kind": "a1500_step_180_adapter",
+      "sha256": "44834f0d43b5dfc9586c266fc38b9260fc28a0cb2b865f75829fd7e8cb2e2555",
+      "bytes": 5206
+    },
+    {
+      "path": "remote/hf-sql/hf-user/a1500-sql-agenttune-20261108-01/training/adapter/_COMPLETE",
+      "kind": "a1500_step_180_adapter",
+      "sha256": "17c8d616cb7d09acdc239b0d9b20fa55b0e9f453389cdc8cd74f03d2aab68104",
+      "bytes": 25
+    },
+    {
+      "path": "remote/hf-sql/hf-user/a1500-sql-agenttune-20261108-01/training/adapter/adapter_config.json",
+      "kind": "a1500_step_180_adapter",
+      "sha256": "52cf3792d2109a703772c6bc46a0fda4d3a58735509fc7bc202d469946dc3208",
+      "bytes": 1182
+    },
+    {
+      "path": "remote/hf-sql/hf-user/a1500-sql-agenttune-20261108-01/training/adapter/adapter_model.safetensors",
+      "kind": "a1500_step_180_adapter",
+      "sha256": "69f0f125c595895bab3b522d450131324fdd5c374e234e62a34b266acf0b62b8",
+      "bytes": 120981200
+    }
+  ],
+  "source_sha256": {
+    "experiments/bird-final/SOURCES.json": "55182e3a0df612abe713e68018baec93e69d19a9ee77bba846aa4362a0055fb0",
+    "experiments/sqale-sft/AMENDMENT-10-recovery-demos.md": "7236e4f51f47fd1bc4bd01fc8996e328b866d7be112ab0147070e3a78ed51f36",
+    "experiments/sqale-sft/AMENDMENT-11-final-and-self-training.md": "5d16411a810e570657130e0dcc299b87e01bf2c8b58cc7611331cd1b06cf584d",
+    "experiments/sqale-sft/AMENDMENT-12-sqlite-version-drift.md": "b86d9ab8cdb77be50de473554d81217d0189b1947eb691473b1d773c60e576bc",
+    "experiments/sqale-sft/AMENDMENT-3-bird-final.md": "0c6da01717e4cff00f74020125a07dc110857f06a1906f7427502b2a44dbdc0a",
+    "experiments/sqale-sft/AMENDMENT-4-run-inputs-and-control.md": "574d69e892521af67fdd5ffa863cdad1109296eb862679d1d4ce5763b5d0ca09",
+    "experiments/sqale-sft/AMENDMENT-5-table-reads-and-manual-audit.md": "a6ae7c14e2d3ec64243648de586f0bdb095592492948c3ed6ca5f39d5031b42a",
+    "experiments/sqale-sft/AMENDMENT-6-selected-logits-g0-02.md": "947e200da856bb7da4b3eff9b8347d36cf2f19c8e1840717a7a59dc363af5c71",
+    "experiments/sqale-sft/AMENDMENT-7-a500-stage.md": "d9390b0a409f394767ecaca88e95fbbacd4a08976ddf86706c29893dc4977bd0",
+    "experiments/sqale-sft/AMENDMENT-8-a1500-stage.md": "4f300da0eb24f8669b143058a457ecaae27c9549c839075ba53921c3c83a5863",
+    "experiments/sqale-sft/AMENDMENT-9-error-feedback-tools.md": "b91d1302075ff6cdfd1b991d598eedd654cd48be4aeb34e3875ec71a380ef90f",
+    "experiments/sqale-sft/RUN-POLICY-v1.json": "7012d5357fd4518bdcd2dcca83165a7560a28ccd6806113e08111499cc31362e",
+    "pyproject.toml": "f2b9fc676f8afacbacaf9906bd35caec1b81f367477b02f17cd0bdf6500008ea",
+    "requirements-sql-runner.txt": "bc18cda4a5d317710d549a681a1a846df333b59a5e259f7660f550897b5c7d84",
+    "scripts/prepare_sql_final_v1.py": "13d667a828e738a028abd3af2344c95b3866786cbbf7578c8dcc89f05a4d0efd",
+    "scripts/sql_job.py": "01dea3c997c227cef7f12413d4fb4a556674ed44d99d7bef1f323a5ede466f78",
+    "src/ayadb/agenttune_sft.py": "08c5165672f23f44d816280428fdd32686afe06a081d93d121db2b847c6fdb9e",
+    "src/ayadb/birdprepare.py": "f35bddaac886d465e77e77c87e96430001983d81ac1aa7269e147d52d18ccc74",
+    "src/ayadb/birdverify.py": "c1dfa83dde0ba289d20b6b1039cfeb8a0294b3f16c88e275d3ae01c04e9c7340",
+    "src/ayadb/compare.py": "cd6c37cd0c8bc8a2ccc9794e5a313ed4d94a38161a31b6ee111792d5a3f202cc",
+    "src/ayadb/continuation.py": "092844ec93f269390d72a6f8de2760dd877fd28f488e0a48751417916b3b5ac1",
+    "src/ayadb/engine.py": "d8ed2868b64968b6126cf99c4c060c646a7a6385b51afbe530443d03894c257e",
+    "src/ayadb/env.py": "a2f8004ffdfb2cbe01461aed98ece5239d0c12000421370b37f86bf88472982e",
+    "src/ayadb/expert.py": "5d9fb3407cb59b3c4b6893b5c99b797da5ea656f541ee4d47a30b4dc4981bbf1",
+    "src/ayadb/gpumemory.py": "6d1919e9bd05761e270de2ff83d4edf027e26c9db891845740ce73ac94049181",
+    "src/ayadb/kcheck.py": "fdaefb47279d62bf1d5e9af6d6af6ae85de4150371d23c2e63d37412ee2c65a4",
+    "src/ayadb/lastposition.py": "5fe245804675f6ccf3d1836fd0d65b08b4ac95f72fee0ef180d656ff5935d4e0",
+    "src/ayadb/losscheck.py": "f84e71346169c34b4083ce403907f4f356e0c53bd257b7c6438c3439906c419c",
+    "src/ayadb/manualaudit.py": "e26f5c6334869c80cddb1de58de85e076a260afaee7877099ba9a55be0e2c916",
+    "src/ayadb/metrics.py": "375ae5fafd789603facefa17b74b871809922c1c70b368f6705d11a899729342",
+    "src/ayadb/positionloss.py": "4fa7303a991866d84add12df42955ef028c811787bff1b95a2e6e89c0a9748a0",
+    "src/ayadb/promptquality.py": "af6e528a9207a8b50511cb8767e3b3469f8f0abb3f2b6eb2fc2e1ebf843804e7",
+    "src/ayadb/protocol.py": "816d0dede8d3553f94179d4a6f8e60394f10680ea61c200d63ce7decfee81792",
+    "src/ayadb/queryshape.py": "1c6d4668fcce3ab2c4cb736b8a25ec1d26292e24b910462f8f3ea6db827b839b",
+    "src/ayadb/runconfig.py": "90c0f0933892bab5eaf6b76cb8ced052c8ec654d3df8842bfede2d4d0985238b",
+    "src/ayadb/runinputs.py": "05c6c1720c112db3a20df2ed85febd13c149c4fda18c9cff1b5957f071f10781",
+    "src/ayadb/runledger.py": "f57104b7206ea40e94b30c67eb9e6f1f97533d42089f6d3e4107b881f91789a2",
+    "src/ayadb/sanity.py": "40422414bcddcd187b0535d68f7e5249a81e1038a807efb353d77c62db52860a",
+    "src/ayadb/scoreraudit.py": "dfb3d7eef9bb66cba764ed6e8a2374e8b717a4fd6ddcdfa58d8eb4bbe9728e05",
+    "src/ayadb/scoringlimits.py": "832bfb7dffcb0ea6f8d437967437949b18dd0dd68a1099c4a67479cb7b5c7c7e",
+    "src/ayadb/selftrainfilter.py": "15843b2bf9fb0536e912fd8ff55579b9aa13abfb974c92102bd22651977c2db8",
+    "src/ayadb/sft.py": "09754ba69a8793471f95fd7e33b18bb24d66caa925a525c3dc4b372c0618b31e",
+    "src/ayadb/sftdata.py": "b2f58df540fbb2a6be39a4398c560bcb6925c49b282aa37b0b1aa6b431f01d13",
+    "src/ayadb/shopprojection.py": "bd09f72fabd3ec7deb7503dcd7b8986f853fa272e01dcfcfef0ef950054b4aee",
+    "src/ayadb/smoke.py": "523d9127e2df64d9fe8548c482c6a5c25cd19efee3e34798c56944163f44442c",
+    "src/ayadb/sqalebuild.py": "f7a79bee1b60e3ef7564cebfb3f41e8b28b99f35ec8a967152d3851ccc4d8dd2",
+    "src/ayadb/sqalebuild_v3.py": "9b5bce037612648c5305a09a5af85c1969f669743139f7f54d26f3218af44474",
+    "src/ayadb/sqalecomplete_v3.py": "919a103d60658562fb19c300317477de050e984d6234f2900e2f8ceb85a943b7",
+    "src/ayadb/sqalepool.py": "cecd15871dff799776e129aed137410fafc6b10f9393249258844bc7dcc4f075",
+    "src/ayadb/sqaletopup.py": "4a3089f81b770dab56a6b5bbfbcbc94fa2f9adf859429ad138dcbf36b24a1db1",
+    "src/ayadb/sqaleverify.py": "cf511edb52164615a8e9b4d056b0c95f4cfc950ec53c03c57e50810887a5283f",
+    "src/ayadb/sqaleverify_v3.py": "f449f6577b4fbdab58d0567a170583efe2e391403344ca5d74fda8620e5cdb4b",
+    "src/ayadb/sqlenv.py": "10ff3982daec30885f9034a5f6f6e6afb204309605e394cc0a221dc5ad611444",
+    "src/ayadb/sqlfeedback.py": "162d84f7bdb90af707492fb1dd7b8bc6b394651418e4d52a3d4c78f7656c98d7",
+    "src/ayadb/sqlguard.py": "dbc5b6254d36ae151d09a47720962beeb56bb0cb1c45fca51950f777345f06eb",
+    "src/ayadb/sqlmutate.py": "21d130f09cde38edfe146310057b820f80773749b3b643e16528f95e4d4bf331",
+    "src/ayadb/sqlmutate_v4.py": "aa650aa1f571f155a76b071389ddbd63b9cede6cc263e47f39c29fd4a6b041e4",
+    "src/ayadb/sqlpolicy.py": "0a2d35dbe77b0cad3cc1429a078cf02dbaae5deedab47c90ca9e101753bf5ac9",
+    "src/ayadb/sqlrunner.py": "e88fffdaca75907e96b4cabfd4f1eb556326028487eb4c1d1ac706172e58a975",
+    "src/ayadb/sqlscore.py": "d6ff31ebbb0bf164528c7604c9647fc6066e9e701531108f73e7430a00ad386a",
+    "src/ayadb/sqlsftdata.py": "a80dfa67c2f02264213098c3ab1df52674148941956f22a56c02bb1c6da19afa",
+    "src/ayadb/sqltraining.py": "8a57ef0fc4164a8949c4d54d1bab42966b0319c81e4151d9a9231d429b9e0d1a",
+    "src/ayadb/tasks.py": "094444db7e197ad88a448d2081a8416f490e7afbecfdba545eade0dff3043b1c",
+    "src/ayadb/tokenbudget.py": "88902de1863e1e603dc7c167b42a90437e2f5b527c25d4f55cf77878eea9b470"
+  },
+  "task_counts": {
+    "bird": 493
+  },
+  "forecast": {
+    "hours": 11.53,
+    "usd": 4.61,
+    "basis": "dev seconds per episode on the same t4-small (Base 16.5 s, A1500 67.0 s); planning only"
+  },
+  "pass_criteria": [
+    "account, rate, pins and private upload verified; every final reference passes before model use",
+    "the frozen selection record matches each evaluated model and adapter",
+    "A1500 steps reload exactly the pinned step-180 adapter",
+    "every task evaluated once per model with one finite projected position; AuditKIT agrees with every score"
+  ],
+  "abort_criteria": [
+    "wrong account or higher hardware price",
+    "reference/oracle drift before model use",
+    "CUDA failure/OOM/nonfinite logits",
+    "selection or adapter mismatch",
+    "sync failure or byte cap",
+    "step/job timeout or stalled output",
+    "AuditKIT disagreement"
+  ],
+  "reporting": "Strict (primary), set (BIRD's usual metric) and fallback for every set and model, with the Base -> A1500 change, are reported whatever they are; no selection, tuning or rerun on final data."
+}

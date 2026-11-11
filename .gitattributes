@@ -1,0 +1,2 @@
+# Store every file byte for byte. Run records are checked by SHA256, so line endings must not change.
+* -text

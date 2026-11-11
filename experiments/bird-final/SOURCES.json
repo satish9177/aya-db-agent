@@ -1,0 +1,99 @@
+{
+  "annotations_repo": "birdsql/bird_mini_dev",
+  "annotations_revision": "5b256b5a9c17478f06ed6912612e9a14d17065c8",
+  "annotations_file": "data/mini_dev_sqlite.jsonl",
+  "annotations_sha256": "926af2a0d1b47e5d0d15a7aa8a34d4721007f4550a881555b6a89496b54a2606",
+  "official_code_revision": "1c49a375e76c471e218564da3f4617513d33e371",
+  "database_image_repository": "3036197201/bird-mini-dev-sqlite",
+  "license": "CC-BY-SA-4.0",
+  "databases": [
+    {
+      "db_id": "california_schools",
+      "tag": "harbor-minidev1024-r1-california_schools-c0903eec662e-1e876b3a",
+      "index_digest": "sha256:b8ea3a7fe04f58759b7fe98644e7058b8c4ff525355cb7586febeeb63a0c121a",
+      "manifest_digest": "sha256:0bb601505723bbca82f3a1486ec455c0b0b22e8990ceb20b86fbc6d0e26c23de",
+      "layer_digest": "sha256:8569ccfa46196208519bde00dc8b6e560678a03dc8eee9df99fcded4a3783c2b",
+      "layer_bytes": 2780399
+    },
+    {
+      "db_id": "card_games",
+      "tag": "harbor-minidev1024-r1-card_games-c98bdb57fe74-1e876b3a",
+      "index_digest": "sha256:c9345f39f69480bd17d9e5356fbaa6f1cda89a069301346fb2460bf18deffb72",
+      "manifest_digest": "sha256:e33b0bd6fbc89dabcbcfe056ce343db3729b6d07dd2294ccbc0662e148dd645a",
+      "layer_digest": "sha256:0276b4212ff242b539f9e53b397fdf5fd5d2e6d9c856aeb8b5ae608d51ba8824",
+      "layer_bytes": 92285876
+    },
+    {
+      "db_id": "codebase_community",
+      "tag": "harbor-minidev1024-r1-codebase_community-92101be6d2a9-1e876b3a",
+      "index_digest": "sha256:c5b556a03d347f5db7400cf0d508dcdcd7e4a2b8d49acb9da33388f4fffa6a20",
+      "manifest_digest": "sha256:d5de47e61f6beba9d632053598ab944a44d43bad0000853d3e730cc5492eb7c5",
+      "layer_digest": "sha256:930386ab044a4b31e0056fb989891671e3cb7e91b12a155a0d94962966ce90db",
+      "layer_bytes": 143885589
+    },
+    {
+      "db_id": "debit_card_specializing",
+      "tag": "harbor-minidev1024-r1-debit_card_specializing-b3d149ad0574-1e876b3a",
+      "index_digest": "sha256:166de7abfaa4c0b8c60af1a7898abc04c62ff0418935e53191f04adae95d03f8",
+      "manifest_digest": "sha256:ca1ea58625c5665629bf7c22777ab6ee227613de0a48745058ad5eae62ebc7eb",
+      "layer_digest": "sha256:5f5105b18d68ca94d8343f0149a1913c401edecdbf2bcc5794306321867ef83a",
+      "layer_bytes": 13070921
+    },
+    {
+      "db_id": "european_football_2",
+      "tag": "harbor-minidev1024-r1-european_football_2-f72f5c9b9903-1e876b3a",
+      "index_digest": "sha256:630db78e1d9d7f1259ecd9a97a3fff99932b24d075a349c8745f5f1a2f16b9d9",
+      "manifest_digest": "sha256:ce710892605633d68a640bd501a9cd34d302aabec9157bc777476e7cc1b62dc4",
+      "layer_digest": "sha256:abd13f5508b88e42767d43aa1b48c3dd6fba5cabcea94b317253ed553c5ab1c6",
+      "layer_bytes": 61079142
+    },
+    {
+      "db_id": "financial",
+      "tag": "harbor-minidev1024-r1-financial-d15d89cdb068-1e876b3a",
+      "index_digest": "sha256:c678e1edaa17fe22bb9d4bf45e6621f4750eaa28bba5cdbdda2970e358ecf5ca",
+      "manifest_digest": "sha256:d56f3f6545e2535bec8fae451f40a5b0ad2a63fa263f9387efe93b5fc8b49352",
+      "layer_digest": "sha256:da9a4cc478ae9e557ebe09c87bc5de73a6285efc73d5a74216fcda49c9e0ee71",
+      "layer_bytes": 21869725
+    },
+    {
+      "db_id": "formula_1",
+      "tag": "harbor-minidev1024-r1-formula_1-79770caf9667-1e876b3a",
+      "index_digest": "sha256:25d76864a497cafdc8e58aaec7553107b82a28cd0edbfea4f3369a86e7c4addd",
+      "manifest_digest": "sha256:b4d5a2da1dde8f8a270ef3d097b710f98d897ee914cb06e5ad53538739457df7",
+      "layer_digest": "sha256:66b2ceb89e1944cae67540af2037956596f34eaf1a206a76b03362035bc586ef",
+      "layer_bytes": 9811016
+    },
+    {
+      "db_id": "student_club",
+      "tag": "harbor-minidev1024-r1-student_club-eb89bcfe97ee-1e876b3a",
+      "index_digest": "sha256:a62c4a2ba595b800a0200194495327e80cd7874a83f7a2b1c0b95fdb65e7f385",
+      "manifest_digest": "sha256:f874e1caf9daa5eea6c21b24a0600e547f3fd2e0fec9402d853ac6cc73f3b840",
+      "layer_digest": "sha256:0a3b5bbc328122c9a8df23b0aa60ee262d6bc23a1ac10d787ff5484f267f172d",
+      "layer_bytes": 618325
+    },
+    {
+      "db_id": "superhero",
+      "tag": "harbor-minidev1024-r1-superhero-75e94a2c3236-1e876b3a",
+      "index_digest": "sha256:047c2c31643ccd07381777b7ceecccf7074a5735cad564c586cbfbca9aee99c2",
+      "manifest_digest": "sha256:c96a0c7f7d3e7d2454b42bba4537da182395b916c121a55e4f2d0d84999dfec8",
+      "layer_digest": "sha256:f08a59d7fa72ee0f719adc00fc1cc3cb6c721699b29146b05a00472c9e516488",
+      "layer_bytes": 105379
+    },
+    {
+      "db_id": "thrombosis_prediction",
+      "tag": "harbor-minidev1024-r1-thrombosis_prediction-87583183c3dc-1e876b3a",
+      "index_digest": "sha256:78c9cac364191a9f69541816094b96a3283135bfd3b48117b93b9f9e156f34aa",
+      "manifest_digest": "sha256:cabfa205b797345599eab26cdbf43e855c88b60323458c2add7837f25c8f4d7e",
+      "layer_digest": "sha256:908b4bb0961baf42e0508b62a70e4301d60ec51952ad7c25b04777bc29bb29a6",
+      "layer_bytes": 3049532
+    },
+    {
+      "db_id": "toxicology",
+      "tag": "harbor-minidev1024-r1-toxicology-4df4094208e0-1e876b3a",
+      "index_digest": "sha256:45cd9fe1cf8a131af3bc009e30092864c30038c0981c47a75616f982ac0feaa8",
+      "manifest_digest": "sha256:c3b8424eac6214f50f7e5ac649549ce461e4936483d0bbf610d488916d16818e",
+      "layer_digest": "sha256:4e7958410b66a21959c5e5ec13abf303bc2693a769c30d94cff6064a28b59ca3",
+      "layer_bytes": 653334
+    }
+  ]
+}

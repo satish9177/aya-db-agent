@@ -1,0 +1,2 @@
+# New, no-dependency SQL parser for v3 mutations/order analysis; existing pins are unchanged.
+sqlglot==30.30.0 --hash=sha256:06c4c212a7868c7dcff0fd0fda348dd3c5cbad40137b3083a70ecdfe22921cf9

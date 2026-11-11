@@ -1,0 +1,419 @@
+{
+  "selection_sha256": "a98813db54c5b11e77fdedb70b0e955fec630696ce0399c51a46cb094c795bcd",
+  "jobs": {
+    "bird": {
+      "job_id": "6af321f0ab34849891abec15",
+      "account": "hf-user",
+      "registration_sha256": "f691c98b921472c99a90e548e37f66e878d17b9681ee8e3e2faefd5fd8eaa6d3",
+      "commit": "eadd6e901c391e264eded715b71e90dba87484d3",
+      "running_seconds": 44293.1,
+      "cost_usd": 4.9217,
+      "checks": {
+        "job_completed_all_steps_exit_0": true,
+        "expected_account_and_registration_sha": true,
+        "all_493_references_before_model_use": true,
+        "same_gpu_and_sqlite_as_a1500_final": true,
+        "bird-b_ok": true
+      },
+      "step_seconds": {
+        "bird-b": 44118.9
+      }
+    },
+    "sqale": {
+      "job_id": "6af321efab34849891abec10",
+      "account": "hf-user",
+      "registration_sha256": "0b74eea13970b01217a4f8b253363997c483895ac126c0cdf1e3856007b5ba89",
+      "commit": "eadd6e901c391e264eded715b71e90dba87484d3",
+      "running_seconds": 16436.4,
+      "cost_usd": 1.8264,
+      "checks": {
+        "job_completed_all_steps_exit_0": true,
+        "expected_account_and_registration_sha": true,
+        "all_224_references_before_model_use": true,
+        "same_gpu_and_sqlite_as_a1500_final": true,
+        "sqale-final-b_ok": true,
+        "retention-dev-b_ok": true,
+        "retention-mh-b_ok": true
+      },
+      "step_seconds": {
+        "sqale-final-b": 9920.0,
+        "retention-dev-b": 2056.8,
+        "retention-mh-b": 4377.3
+      }
+    }
+  },
+  "sets": {
+    "bird": {
+      "n": 493,
+      "strict": {
+        "base": 0,
+        "a1500": 8,
+        "b": 7,
+        "base_pct": 0.0,
+        "a1500_pct": 1.62,
+        "b_pct": 1.42,
+        "b_95ci_pct": [
+          0.7,
+          2.9
+        ],
+        "b_only_vs_a1500": 1,
+        "a1500_only_vs_b": 2,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "fallback": {
+        "base": 0,
+        "a1500": 9,
+        "b": 7,
+        "base_pct": 0.0,
+        "a1500_pct": 1.83,
+        "b_pct": 1.42,
+        "b_95ci_pct": [
+          0.7,
+          2.9
+        ],
+        "b_only_vs_a1500": 1,
+        "a1500_only_vs_b": 3,
+        "exact_mcnemar_p_b_vs_a1500": 0.625
+      },
+      "set": {
+        "base": 0,
+        "a1500": 8,
+        "b": 8,
+        "base_pct": 0.0,
+        "a1500_pct": 1.62,
+        "b_pct": 1.62,
+        "b_95ci_pct": [
+          0.8,
+          3.2
+        ],
+        "b_only_vs_a1500": 2,
+        "a1500_only_vs_b": 2,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "strict_by_group": {
+        "challenging": {
+          "n": 453,
+          "base": 0,
+          "a1500": 6,
+          "b": 6
+        },
+        "moderate": {
+          "n": 32,
+          "base": 0,
+          "a1500": 0,
+          "b": 0
+        },
+        "simple": {
+          "n": 8,
+          "base": 0,
+          "a1500": 2,
+          "b": 1
+        }
+      },
+      "behaviour": {
+        "base": {
+          "submitted": 282,
+          "out_of_steps": 9,
+          "submitted_failed_to_run": 260,
+          "malformed_turns": 176
+        },
+        "a1500": {
+          "submitted": 233,
+          "out_of_steps": 235,
+          "submitted_failed_to_run": 1,
+          "malformed_turns": 25
+        },
+        "b": {
+          "submitted": 234,
+          "out_of_steps": 252,
+          "submitted_failed_to_run": 2,
+          "malformed_turns": 7
+        }
+      },
+      "b_seconds": 44118.9,
+      "b_peak_allocated_gib": 6.16
+    },
+    "sqale-final": {
+      "n": 144,
+      "strict": {
+        "base": 4,
+        "a1500": 45,
+        "b": 44,
+        "base_pct": 2.78,
+        "a1500_pct": 31.25,
+        "b_pct": 30.56,
+        "b_95ci_pct": [
+          23.6,
+          38.5
+        ],
+        "b_only_vs_a1500": 6,
+        "a1500_only_vs_b": 7,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "fallback": {
+        "base": 4,
+        "a1500": 45,
+        "b": 44,
+        "base_pct": 2.78,
+        "a1500_pct": 31.25,
+        "b_pct": 30.56,
+        "b_95ci_pct": [
+          23.6,
+          38.5
+        ],
+        "b_only_vs_a1500": 6,
+        "a1500_only_vs_b": 7,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "set": {
+        "base": 5,
+        "a1500": 51,
+        "b": 51,
+        "base_pct": 3.47,
+        "a1500_pct": 35.42,
+        "b_pct": 35.42,
+        "b_95ci_pct": [
+          28.1,
+          43.5
+        ],
+        "b_only_vs_a1500": 8,
+        "a1500_only_vs_b": 8,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "strict_by_group": {
+        "1-table aggregate": {
+          "n": 13,
+          "base": 0,
+          "a1500": 6,
+          "b": 7
+        },
+        "1-table lookup": {
+          "n": 36,
+          "base": 4,
+          "a1500": 27,
+          "b": 29
+        },
+        "3+ tables": {
+          "n": 19,
+          "base": 0,
+          "a1500": 1,
+          "b": 0
+        },
+        "multi-step": {
+          "n": 32,
+          "base": 0,
+          "a1500": 1,
+          "b": 1
+        },
+        "two tables": {
+          "n": 44,
+          "base": 0,
+          "a1500": 10,
+          "b": 7
+        }
+      },
+      "behaviour": {
+        "base": {
+          "submitted": 74,
+          "out_of_steps": 5,
+          "submitted_failed_to_run": 68,
+          "malformed_turns": 38
+        },
+        "a1500": {
+          "submitted": 104,
+          "out_of_steps": 39,
+          "submitted_failed_to_run": 1,
+          "malformed_turns": 1
+        },
+        "b": {
+          "submitted": 98,
+          "out_of_steps": 46,
+          "submitted_failed_to_run": 0,
+          "malformed_turns": 0
+        }
+      },
+      "b_seconds": 9920.0,
+      "b_peak_allocated_gib": 4.13
+    },
+    "retention-dev": {
+      "n": 40,
+      "strict": {
+        "base": 0,
+        "a1500": 40,
+        "b": 40,
+        "base_pct": 0.0,
+        "a1500_pct": 100.0,
+        "b_pct": 100.0,
+        "b_95ci_pct": [
+          91.2,
+          100.0
+        ],
+        "b_only_vs_a1500": 0,
+        "a1500_only_vs_b": 0,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "fallback": {
+        "base": 2,
+        "a1500": 40,
+        "b": 40,
+        "base_pct": 5.0,
+        "a1500_pct": 100.0,
+        "b_pct": 100.0,
+        "b_95ci_pct": [
+          91.2,
+          100.0
+        ],
+        "b_only_vs_a1500": 0,
+        "a1500_only_vs_b": 0,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "set": {
+        "base": 0,
+        "a1500": 40,
+        "b": 40,
+        "base_pct": 0.0,
+        "a1500_pct": 100.0,
+        "b_pct": 100.0,
+        "b_95ci_pct": [
+          91.2,
+          100.0
+        ],
+        "b_only_vs_a1500": 0,
+        "a1500_only_vs_b": 0,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "strict_by_group": {
+        "1-table aggregate": {
+          "n": 10,
+          "base": 0,
+          "a1500": 10,
+          "b": 10
+        },
+        "1-table lookup": {
+          "n": 5,
+          "base": 0,
+          "a1500": 5,
+          "b": 5
+        },
+        "3+ tables": {
+          "n": 15,
+          "base": 0,
+          "a1500": 15,
+          "b": 15
+        },
+        "two tables": {
+          "n": 10,
+          "base": 0,
+          "a1500": 10,
+          "b": 10
+        }
+      },
+      "behaviour": {
+        "base": {
+          "submitted": 18,
+          "out_of_steps": 0,
+          "submitted_failed_to_run": 18,
+          "malformed_turns": 6
+        },
+        "a1500": {
+          "submitted": 40,
+          "out_of_steps": 0,
+          "submitted_failed_to_run": 0,
+          "malformed_turns": 0
+        },
+        "b": {
+          "submitted": 40,
+          "out_of_steps": 0,
+          "submitted_failed_to_run": 0,
+          "malformed_turns": 0
+        }
+      },
+      "b_seconds": 2056.8,
+      "b_peak_allocated_gib": 3.13
+    },
+    "retention-mh": {
+      "n": 40,
+      "strict": {
+        "base": 0,
+        "a1500": 1,
+        "b": 0,
+        "base_pct": 0.0,
+        "a1500_pct": 2.5,
+        "b_pct": 0.0,
+        "b_95ci_pct": [
+          -0.0,
+          8.8
+        ],
+        "b_only_vs_a1500": 0,
+        "a1500_only_vs_b": 1,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "fallback": {
+        "base": 0,
+        "a1500": 1,
+        "b": 0,
+        "base_pct": 0.0,
+        "a1500_pct": 2.5,
+        "b_pct": 0.0,
+        "b_95ci_pct": [
+          -0.0,
+          8.8
+        ],
+        "b_only_vs_a1500": 0,
+        "a1500_only_vs_b": 1,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "set": {
+        "base": 0,
+        "a1500": 1,
+        "b": 0,
+        "base_pct": 0.0,
+        "a1500_pct": 2.5,
+        "b_pct": 0.0,
+        "b_95ci_pct": [
+          -0.0,
+          8.8
+        ],
+        "b_only_vs_a1500": 0,
+        "a1500_only_vs_b": 1,
+        "exact_mcnemar_p_b_vs_a1500": 1.0
+      },
+      "strict_by_group": {
+        "3+ tables": {
+          "n": 18,
+          "base": 0,
+          "a1500": 1,
+          "b": 0
+        },
+        "multi-step": {
+          "n": 22,
+          "base": 0,
+          "a1500": 0,
+          "b": 0
+        }
+      },
+      "behaviour": {
+        "base": {
+          "submitted": 31,
+          "out_of_steps": 0,
+          "submitted_failed_to_run": 31,
+          "malformed_turns": 9
+        },
+        "a1500": {
+          "submitted": 20,
+          "out_of_steps": 20,
+          "submitted_failed_to_run": 0,
+          "malformed_turns": 0
+        },
+        "b": {
+          "submitted": 8,
+          "out_of_steps": 32,
+          "submitted_failed_to_run": 0,
+          "malformed_turns": 0
+        }
+      },
+      "b_seconds": 4377.3,
+      "b_peak_allocated_gib": 3.35
+    }
+  }
+}

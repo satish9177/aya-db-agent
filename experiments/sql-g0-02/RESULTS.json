@@ -1,0 +1,371 @@
+{
+  "registration_id": "g0-sql-agenttune-20261107-02",
+  "registration_sha256": "e86597148c4ccdeb645777fb85f4090ec0eb1156789172165b425242d70f2580",
+  "commit": "51270ad81ce05e2591e1a6ea60cd94ee3026e082",
+  "job_id": "6aef547de6320c66fad5ff75",
+  "job_url": "6aef547de6320c66fad5ff75",
+  "account": "hf-user",
+  "hardware": "t4-small",
+  "gpu": "Tesla T4",
+  "outcome": "PASS",
+  "outcome_note": "All registered pass conditions met. The checkpoint-3 reload record file was not synced (launcher sync filter drops files named checkpoint-*); the reload check itself ran before inference and raises on any mismatch, and the step exited 0.",
+  "job_status": "COMPLETED",
+  "created_at": "2026-11-07 16:40:29.396000+00:00",
+  "started_at": "2026-11-07 16:40:34.091000+00:00",
+  "finished_at": "2026-11-07 16:51:44.986000+00:00",
+  "provider_durations": {
+    "scheduling_secs": 4,
+    "running_secs": 670,
+    "total_secs": 675
+  },
+  "running_seconds_exact": 670.895,
+  "step_seconds": {
+    "short-loss-equivalence": 68.46,
+    "train-to-2": 56.008,
+    "resume-to-3": 38.004,
+    "infer-base-nf4": 56.004,
+    "infer-pilot-nf4": 271.026,
+    "infer-checkpoint3-nf4": 99.298
+  },
+  "setup_and_sync_seconds_outside_steps": 82.1,
+  "upload": {
+    "files": 16,
+    "data_bytes": 143206958,
+    "prefix": "sql-inputs/g0-sql-agenttune-20261107-02/e86597148c4ccdeb645777fb85f4090ec0eb1156789172165b425242d70f2580"
+  },
+  "output_snapshot_bytes": 671502991,
+  "environment": {
+    "versions": {
+      "torch": "2.11.0+cu126",
+      "torchvision": "0.26.0+cu126",
+      "transformers": "5.22.1",
+      "tokenizers": "0.23.3",
+      "huggingface_hub": "1.33.0",
+      "peft": "0.21.2",
+      "trl": "1.7.1",
+      "accelerate": "1.15.0",
+      "agenttune": "1.1.3",
+      "auditkit": "1.1.3",
+      "bitsandbytes": "0.50.2",
+      "requests": "2.34.2",
+      "safetensors": "0.8.0",
+      "sqlglot": "30.30.0"
+    },
+    "cuda_version": "12.6",
+    "sqlite_version": "3.40.1",
+    "pytorch_cuda_alloc_conf": "expandable_segments:True"
+  },
+  "runtime_oracles": {
+    "references_checked": 5,
+    "model_calls": 0
+  },
+  "short_loss_check": {
+    "passed": true,
+    "full_loss": 0.6791874170303345,
+    "selected_loss": 0.6791874766349792,
+    "absolute_difference": 5.960464477539063e-08,
+    "rtol": 0.0001,
+    "atol": 0.0001,
+    "full_projected_positions": 1219,
+    "selected_projected_positions": 106,
+    "optimizer_steps": 0,
+    "native_cohere2_loss": true,
+    "example_id": "schema_010335_s3_q2_518f1ca496-gold",
+    "gpu_memory": {
+      "time_utc": "2026-11-07T16:42:47.955447+00:00",
+      "phase": "short-loss-equivalence",
+      "event": "loss_comparison_complete",
+      "optimizer_step": null,
+      "allocated_bytes": 3728570368,
+      "reserved_bytes": 7713325056,
+      "peak_allocated_bytes": 6994560512,
+      "peak_reserved_bytes": 7713325056,
+      "device_free_bytes": 7975665664,
+      "device_total_bytes": 15828320256
+    }
+  },
+  "training": {
+    "backend": "AgentTune.create_distill_trainer/Project.distill/AuditedSFTFactory",
+    "loss_policy": "trained-positions-v1",
+    "example_id": "schema_011342_s2_q7_7b9a6dce95-gold",
+    "input_tokens": 4072,
+    "target_tokens": 431,
+    "fresh_encoding_verified": true,
+    "train_set_sha256": "4209b7c1eff41f18ae958e632204c854da42ef3d7969eea9667a305f550eb8f3",
+    "trainable_parameters": 30228480,
+    "total_parameters": 3379456000,
+    "log_history": [
+      {
+        "epoch": 1.0,
+        "grad_norm": 1.3365435600280762,
+        "learning_rate": 0.0002,
+        "loss": 0.5215599536895752,
+        "step": 1
+      },
+      {
+        "epoch": 2.0,
+        "grad_norm": 0.4627496600151062,
+        "learning_rate": 0.00015000000000000001,
+        "loss": 0.16805881261825562,
+        "step": 2
+      },
+      {
+        "epoch": 3.0,
+        "grad_norm": 0.20732122659683228,
+        "learning_rate": 5.000000000000002e-05,
+        "loss": 0.10342858731746674,
+        "step": 3
+      }
+    ],
+    "token_ledger_final": {
+      "optimizer_steps": 3,
+      "skipped_optimizer_steps": 0,
+      "microbatches": 3,
+      "input_tokens": 12216,
+      "target_tokens": 1293,
+      "padded_tokens": 0,
+      "example_visits": 3,
+      "unique_examples_seen": [
+        "698fa8676a0839127145a3a048626f1e83189ca0e125752b84857ecd93d21607"
+      ],
+      "last_global_step": 3
+    },
+    "checkpoint_2_adapter_sha256": "bea188ac6ac4aafdd3362a1d3b3d30547cc767a918e9719d6b3e0f99f3a49190",
+    "checkpoint_3_adapter_sha256": "11f9371e219a9c285fa0710e73222fd908b922820bb16ad50be82d423374710d",
+    "resumed_from": "runs/sql/g0-sql-agenttune-20261107-02/training/checkpoints/checkpoint-2",
+    "resume_evidence": "fresh process; progress started at step 2/3 and ran one step; step-3 learning rate 5e-05 equals the cosine schedule continuation (a lost scheduler would give 2e-04); ledger continued 862 -> 1293 targets",
+    "trainer_runtime_seconds": {
+      "train-to-2": 31.425,
+      "resume-to-3": 17.175
+    },
+    "tokens_per_second_estimate": {
+      "train-to-2_trainer_runtime": 266.5,
+      "basis": "Trainer train_runtime 30.56s for 2 optimizer steps of 4,072 input tokens each, including a checkpoint save after every step (save_steps=1); one example only"
+    }
+  },
+  "gpu_memory": {
+    "device_total_bytes": 15828320256,
+    "device_total_gib": 14.741,
+    "per_phase": {
+      "short-loss-equivalence": {
+        "events": [
+          "after_model_load",
+          "loss_comparison_complete"
+        ],
+        "peak_allocated_bytes": 6994560512,
+        "peak_reserved_bytes": 7713325056,
+        "peak_allocated_gib": 6.514,
+        "peak_reserved_gib": 7.184
+      },
+      "train-to-2": {
+        "events": [
+          "after_model_load",
+          "after_optimizer_step",
+          "after_optimizer_step",
+          "training_complete"
+        ],
+        "peak_allocated_bytes": 9522548736,
+        "peak_reserved_bytes": 10926161920,
+        "peak_allocated_gib": 8.869,
+        "peak_reserved_gib": 10.176
+      },
+      "resume-to-3": {
+        "events": [
+          "after_model_load",
+          "after_optimizer_step",
+          "training_complete"
+        ],
+        "peak_allocated_bytes": 9561622528,
+        "peak_reserved_bytes": 10963910656,
+        "peak_allocated_gib": 8.905,
+        "peak_reserved_gib": 10.211
+      },
+      "infer-base-nf4": {
+        "events": [
+          "after_model_load",
+          "inference_complete"
+        ],
+        "peak_allocated_bytes": 2869623808,
+        "peak_reserved_bytes": 3009413120,
+        "peak_allocated_gib": 2.673,
+        "peak_reserved_gib": 2.803
+      },
+      "infer-pilot-nf4": {
+        "events": [
+          "after_model_load",
+          "inference_complete"
+        ],
+        "peak_allocated_bytes": 3804033024,
+        "peak_reserved_bytes": 3997171712,
+        "peak_allocated_gib": 3.543,
+        "peak_reserved_gib": 3.723
+      },
+      "infer-checkpoint3-nf4": {
+        "events": [
+          "after_model_load",
+          "inference_complete"
+        ],
+        "peak_allocated_bytes": 2985916416,
+        "peak_reserved_bytes": 3137339392,
+        "peak_allocated_gib": 2.781,
+        "peak_reserved_gib": 2.922
+      }
+    },
+    "run_peak_allocated_bytes": 9561622528,
+    "run_peak_allocated_gib": 8.905,
+    "run_peak_reserved_bytes": 10963910656,
+    "run_peak_reserved_gib": 10.211,
+    "oom_events": 0
+  },
+  "inference": {
+    "infer-base-nf4": {
+      "episodes": 3,
+      "strict_successes": 0,
+      "fallback_successes": 0,
+      "set_successes": 0,
+      "auditkit_agreement": 3,
+      "auditkit_verdicts": {
+        "schema_000457_s2_q6_bd9c15532c#s0": "failure",
+        "schema_000552_s0_q0_118d70db6b#s0": "failure",
+        "schema_000764_s2_q5_c3f0cc5b0d#s0": "failure"
+      },
+      "generated_tokens": 210,
+      "prompt_tokens": 5269,
+      "finite_logit_forwards": 210,
+      "inference_logits_to_keep": 1,
+      "seconds": 37.21,
+      "seconds_per_episode": 12.4,
+      "submission_count": 1,
+      "no_table_submissions": 1,
+      "valid_no_table_submissions": 0,
+      "error_no_table_submissions": 1,
+      "accepted_submission_no_table": 1,
+      "episode_tool_calls": [
+        1,
+        1,
+        1
+      ],
+      "episode_sql_errors": [
+        1,
+        0,
+        1
+      ],
+      "episode_errors": [
+        "unsubmitted",
+        "no such table: municipal_employees",
+        "unsubmitted"
+      ]
+    },
+    "infer-pilot-nf4": {
+      "episodes": 3,
+      "strict_successes": 0,
+      "fallback_successes": 0,
+      "set_successes": 0,
+      "auditkit_agreement": 3,
+      "auditkit_verdicts": {
+        "schema_000457_s2_q6_bd9c15532c#s0": "failure",
+        "schema_000552_s0_q0_118d70db6b#s0": "failure",
+        "schema_000764_s2_q5_c3f0cc5b0d#s0": "failure"
+      },
+      "generated_tokens": 1042,
+      "prompt_tokens": 37016,
+      "finite_logit_forwards": 1042,
+      "inference_logits_to_keep": 1,
+      "seconds": 250.74,
+      "seconds_per_episode": 83.58,
+      "submission_count": 2,
+      "no_table_submissions": 1,
+      "valid_no_table_submissions": 0,
+      "error_no_table_submissions": 1,
+      "accepted_submission_no_table": 1,
+      "episode_tool_calls": [
+        7,
+        8,
+        7
+      ],
+      "episode_sql_errors": [
+        1,
+        3,
+        1
+      ],
+      "episode_errors": [
+        "no such column: d.error_count",
+        "unsubmitted",
+        "near \"3\": syntax error"
+      ]
+    },
+    "infer-checkpoint3-nf4": {
+      "episodes": 3,
+      "strict_successes": 0,
+      "fallback_successes": 0,
+      "set_successes": 0,
+      "auditkit_agreement": 3,
+      "auditkit_verdicts": {
+        "schema_000457_s2_q6_bd9c15532c#s0": "failure",
+        "schema_000552_s0_q0_118d70db6b#s0": "failure",
+        "schema_000764_s2_q5_c3f0cc5b0d#s0": "failure"
+      },
+      "generated_tokens": 393,
+      "prompt_tokens": 6390,
+      "finite_logit_forwards": 393,
+      "inference_logits_to_keep": 1,
+      "seconds": 78.72,
+      "seconds_per_episode": 26.24,
+      "submission_count": 2,
+      "no_table_submissions": 2,
+      "valid_no_table_submissions": 0,
+      "error_no_table_submissions": 2,
+      "accepted_submission_no_table": 2,
+      "episode_tool_calls": [
+        1,
+        2,
+        2
+      ],
+      "episode_sql_errors": [
+        1,
+        1,
+        1
+      ],
+      "episode_errors": [
+        "unsubmitted",
+        "no such column: full_name",
+        "no such column: b.name"
+      ]
+    }
+  },
+  "cost": {
+    "price_usd_per_minute": 0.006667,
+    "running_time_prorated_usd": 0.074548,
+    "running_time_whole_minute_estimate_usd": 0.080004,
+    "invoice_charge_usd": null,
+    "actual_invoice_unavailable": true,
+    "storage_charge_usd": null,
+    "first_month_storage_reserve_usd": 0.04
+  },
+  "checks": {
+    "expected_account_source_revision_private_upload": "PASS",
+    "cuda_and_nf4_model_load": "PASS",
+    "runtime_oracles_5": "PASS",
+    "short_native_loss_agreement_1219_vs_106_projection": "PASS",
+    "agenttune_factory_membership_masks_4072_input_431_target": "PASS",
+    "three_finite_optimizer_steps": "PASS",
+    "checkpoint_2_optimizer_resume": "PASS",
+    "checkpoint_3_tensor_reload": "PASS_RECORD_FILE_NOT_SYNCED",
+    "inference_generation_all_conditions": "PASS",
+    "finite_one_position_logits": "PASS",
+    "durable_memory_events": "PASS",
+    "auditkit_score_agreement": "PASS"
+  },
+  "known_issue": {
+    "what": "infer-checkpoint3-nf4/checkpoint-reload.json missing from the synced output",
+    "cause": "scripts/sql_job.py snapshot ignore rule drops any name starting with 'checkpoint-' that has no _COMPLETE child; it was meant for incomplete checkpoint folders but also matches this file",
+    "verified_locally": "copytree with the same ignore function copies summary.json and drops checkpoint-reload.json",
+    "impact": "the tensor count/sha record is lost; the pass itself follows from control flow (verify_reloaded_adapter raises before inference; no handler swallows it; step exit 0)",
+    "fix_status": "not changed; needs a prospective launcher fix before the next registration"
+  },
+  "no_retry": true,
+  "other_paid_jobs_started": 0,
+  "registration_unchanged": true,
+  "temporary_adapter_adopted": false,
+  "accuracy_note": "0/3 strict for every condition on three fixed dev tasks; correctness was reported, not a pass threshold, and n=3 supports no accuracy claim"
+}

@@ -1,0 +1,219 @@
+{
+  "model": {
+    "registration_id": "a1500-sql-agenttune-20261108-01",
+    "registration_sha256": "92a8fc109e26f6de9a8e2196ecfdfb4bc62d85f23b20468a4d65ccd974aa8363",
+    "job_id": "6af0139be6320c66fad700ed",
+    "step": "dev-a1500-nf4",
+    "adapter": "runs/sql/a1500-sql-agenttune-20261108-01/training/adapter",
+    "adapter_sha256": "69f0f125c595895bab3b522d450131324fdd5c374e234e62a34b266acf0b62b8",
+    "model": "CohereLabs/tiny-aya-global",
+    "revision": "af89d219b53ed9b13b8a4645f9c8028973510324"
+  },
+  "metrics_sha256": "202aef13a5e7488cc4f41a294545a7879ae4d2f97189853121986caef7b54724",
+  "seed": 42,
+  "coverage": {
+    "failure": {
+      "available": 58,
+      "requested": 20,
+      "selected": 20,
+      "shortfall": 0
+    },
+    "success": {
+      "available": 37,
+      "requested": 10,
+      "selected": 10,
+      "shortfall": 0
+    }
+  },
+  "selected": [
+    {
+      "trajectory_id": "schema_017633_s2_q1_1eb6caece1#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Summed booking IDs instead of day differences (julianday(enddat) - julianday(begdat)); 45 vs gold 18."
+    },
+    {
+      "trajectory_id": "schema_009274_s2_q4_b717dd85ba#s0",
+      "scored_outcome": "failure",
+      "label": "correct but scorer too strict",
+      "explanation": "Borderline. Both group totals are correct (274,969,867 vs 68,540,217), but the scalar subqueries sit over FROM data_bonus_performa, so the same pair is repeated in all 71 rows, with no group labels or counts."
+    },
+    {
+      "trajectory_id": "schema_019492_s3_q3_f307f6930b#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Described a misspelled table instead of registros_seguridad, guessed a column (tipoaccion) and repeated the same failing query until the eight steps ran out."
+    },
+    {
+      "trajectory_id": "schema_006201_s2_q6_e7d5d4e831#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Joined violations to failed jobs before counting, which multiplies counts: proj-0017 gets 2 violations instead of 1."
+    },
+    {
+      "trajectory_id": "schema_007837_s0_q7_3449844ad7#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Referenced a non-existent column (hs.registro) and repeated the identical failing query until the steps ran out."
+    },
+    {
+      "trajectory_id": "schema_008862_s0_q5_56421d2a2a#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Wrong CTE joins returned 0 rows; gold has 48 stores."
+    },
+    {
+      "trajectory_id": "schema_020040_s2_q6_85315797ab#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Selected a non-existent column (m.encryption_id) and repeated the identical failing query until the steps ran out."
+    },
+    {
+      "trajectory_id": "schema_020683_s2_q7_77706258c2#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Filtered to cancelled backups before averaging, so each user's average covers only cancelled backups (44.41 vs 64.42)."
+    },
+    {
+      "trajectory_id": "schema_013612_s3_q7_243e035883#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Used a non-existent column (ea.employee_id) and repeated the identical failing query until the steps ran out."
+    },
+    {
+      "trajectory_id": "schema_008842_s3_q2_bdb65e3bac#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Typo h.supvisor repeated five times until the steps ran out; it also compared to the batch average, not the average of supervisor averages."
+    },
+    {
+      "trajectory_id": "schema_005185_s1_q3_e6b6838b8e#s0",
+      "scored_outcome": "failure",
+      "label": "correct but scorer too strict",
+      "explanation": "Exactly the 43 gold emails (set match). Missing only ORDER BY email, which the question did not ask for."
+    },
+    {
+      "trajectory_id": "schema_017961_s1_q2_d7fbfff33a#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Joined resume.id to ment.menid and subtracted date strings; 0 rows instead of 7 titles."
+    },
+    {
+      "trajectory_id": "schema_013151_s0_q5_ea08a73701#s0",
+      "scored_outcome": "failure",
+      "label": "correct but scorer too strict",
+      "explanation": "Same 53 rows as gold (set match), sorted by count instead of by name; the question asked for no order."
+    },
+    {
+      "trajectory_id": "schema_013867_s3_q0_8e4c601e9f#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Exact match on 'Greenhouse Beta' plus an invented status = 'active' filter gave 0 rows; repeated it until the steps ran out."
+    },
+    {
+      "trajectory_id": "schema_012029_s2_q2_e8456d05f8#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Used a non-existent column t.idProfil, ranked profiles by member count instead of completed tasks, and repeated the failing query until the steps ran out."
+    },
+    {
+      "trajectory_id": "schema_016481_s2_q2_5238fa0df8#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Never joined the requirements table or filtered fulfilled = 0; counted events and returned 0 rows."
+    },
+    {
+      "trajectory_id": "schema_001062_s1_q5_1c2ed7fda9#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Used a non-existent column r.user_id and repeated the identical failing query until the steps ran out."
+    },
+    {
+      "trajectory_id": "schema_009244_s3_q6_ed2953904c#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Second count repeats the first (22, 22); loans with no payment over 100 number 74."
+    },
+    {
+      "trajectory_id": "schema_019135_s3_q4_bbe7426ec0#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Returned the row id instead of the word_id the question asks for; the IDs differ (4 vs 8475)."
+    },
+    {
+      "trajectory_id": "schema_001885_s1_q7_adf389c47a#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Invented a Container = 'MP3' filter and broken column references; spent steps describing tables and ran out."
+    },
+    {
+      "trajectory_id": "schema_004405_s2_q1_f700bc6e8c#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Dropped the backup_type filter, but backup_id is unique (26/26) and BL-0014 is a successful FULL_BACKUP, so the query is right."
+    },
+    {
+      "trajectory_id": "schema_010444_s0_q0_a947757209#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Read the hidden folders' names, descriptions and creator from the right table and flag."
+    },
+    {
+      "trajectory_id": "schema_005839_s1_q2_81edd8f9ef#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Exact reference query."
+    },
+    {
+      "trajectory_id": "schema_004909_s1_q0_7705aebee1#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Exact reference query."
+    },
+    {
+      "trajectory_id": "schema_011654_s2_q1_f0e6046091#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Exact reference query."
+    },
+    {
+      "trajectory_id": "schema_015224_s1_q1_373e54f1d0#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Exact reference query."
+    },
+    {
+      "trajectory_id": "schema_015324_s0_q7_1cfa1d3526#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Correct window-function query (ROW_NUMBER over id_metric by ctime DESC); matches the reference."
+    },
+    {
+      "trajectory_id": "schema_003985_s2_q0_d0bc21c064#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Adds a harmless join to category; same filter and result."
+    },
+    {
+      "trajectory_id": "schema_013801_s1_q5_0f985b19ec#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Compares against '2021-01-01 00:00:00' instead of '2021-01-01'; only an exact-midnight row could differ, and none does."
+    },
+    {
+      "trajectory_id": "schema_016301_s1_q2_68cd29b0cf#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Returns budget, not SUM(budget), but department names are unique (40/40), so the total equals the single budget."
+    }
+  ],
+  "allowed_labels": [
+    "really wrong",
+    "correct but scorer too strict",
+    "lucky pass",
+    "correct and scorer agrees"
+  ],
+  "scores_changed": false,
+  "audit_status": "labelled",
+  "reader": "Claude (Opus 5.5) in the local Claude Code session, 2026-11-08; not a human reviewer"
+}

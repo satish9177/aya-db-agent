@@ -1,0 +1,40 @@
+{
+  "frozen": true,
+  "frozen_on": "2026-11-09",
+  "amendment": "experiments/sqale-sft/AMENDMENT-11-final-and-self-training.md",
+  "basis": "dev strict on the same 95 effective dev tasks only; no final, BIRD or retention result was seen",
+  "dev_strict": {
+    "base": 2,
+    "pilot": 20,
+    "a500": 28,
+    "a1500": 37,
+    "a1500-hints": 38,
+    "a1500v4": 35
+  },
+  "models": [
+    {
+      "name": "base",
+      "role": "before (untuned)",
+      "model": "CohereLabs/tiny-aya-global",
+      "model_revision": "af89d219b53ed9b13b8a4645f9c8028973510324",
+      "adapter_sha256": null
+    },
+    {
+      "name": "a1500",
+      "role": "best trained model on dev (37/95)",
+      "model": "CohereLabs/tiny-aya-global",
+      "model_revision": "af89d219b53ed9b13b8a4645f9c8028973510324",
+      "adapter_sha256": "69f0f125c595895bab3b522d450131324fdd5c374e234e62a34b266acf0b62b8",
+      "registration_sha256": "92a8fc109e26f6de9a8e2196ecfdfb4bc62d85f23b20468a4d65ccd974aa8363",
+      "job_id": "6af0139be6320c66fad700ed"
+    }
+  ],
+  "not_selected": {
+    "pilot": "shop-only model; optional, not run (cost/time)",
+    "a500": "below A1500 on dev",
+    "a1500v4": "35/95, below A1500 (amendment 10)",
+    "column-hints-v1 tools": "not adopted (amendment 9); finals use the original tools"
+  },
+  "conditional_addition": "self-training model B (amendment 11) is added by a separate final registration only if its dev strict is at least 38/95; decided on dev only",
+  "tools": "original SQLTools (no tool_feedback)"
+}

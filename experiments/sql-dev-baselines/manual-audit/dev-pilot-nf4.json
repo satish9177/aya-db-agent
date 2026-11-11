@@ -1,0 +1,219 @@
+{
+  "model": {
+    "registration_id": "dev-baselines-sql-20261107-01",
+    "registration_sha256": "53049d18e68d5645e3a656e63a00232b6fe8ce86c49f2ee55979e02d89410ee9",
+    "job_id": "6aef6392e6320c66fad617ba",
+    "step": "dev-pilot-nf4",
+    "adapter": "remote/hf/pilot/sft-pilot/adapter",
+    "model": "CohereLabs/tiny-aya-global",
+    "revision": "af89d219b53ed9b13b8a4645f9c8028973510324",
+    "adapter_sha256_prefix": "6f2827ae"
+  },
+  "metrics_sha256": "501f18f6d449bc8d36d06aa4cb3693fccb7654920ce1021c120e7d5f5f252f7f",
+  "seed": 42,
+  "coverage": {
+    "failure": {
+      "available": 75,
+      "requested": 20,
+      "selected": 20,
+      "shortfall": 0
+    },
+    "success": {
+      "available": 20,
+      "requested": 10,
+      "selected": 10,
+      "shortfall": 0
+    }
+  },
+  "selected": [
+    {
+      "trajectory_id": "schema_014030_s1_q1_09b0b33e3e#s0",
+      "scored_outcome": "failure",
+      "label": "correct but scorer too strict",
+      "explanation": "Returned the two requested columns (agreement date, active status) with exactly the right 11 rows; the reference also returns user_id because five users signed, which the question does not ask for."
+    },
+    {
+      "trajectory_id": "schema_006201_s2_q6_e7d5d4e831#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Joined on a nonexistent column and repeated the same failing query five times; never submitted."
+    },
+    {
+      "trajectory_id": "schema_011047_s2_q2_29e912549a#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Did not quote the column names with spaces ('First Name'); submitted a failing query."
+    },
+    {
+      "trajectory_id": "schema_004398_s1_q3_5c6365c162#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Put WHERE before JOIN; submitted a query with a syntax error."
+    },
+    {
+      "trajectory_id": "schema_003515_s1_q4_27ca0b6065#s0",
+      "scored_outcome": "failure",
+      "label": "correct but scorer too strict",
+      "explanation": "Borderline. Right 18 users' emails, but without DISTINCT two users appear twice (20 rows); set score passes. The question asks for the users' emails, so repeats are a presentation flaw rather than a wrong answer."
+    },
+    {
+      "trajectory_id": "schema_018514_s3_q1_72f8f9c8de#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Repeated a query with a syntax error ('ADJOIN') until the steps ran out."
+    },
+    {
+      "trajectory_id": "schema_020636_s1_q2_9f026d377b#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted 'SELECT COUNT(*) FROM STAT-295 ...', using a course code as a table; syntax error."
+    },
+    {
+      "trajectory_id": "schema_018802_s3_q7_e94ca180d5#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Used an undefined alias/column (r.descricao), repeated the failing query; never submitted."
+    },
+    {
+      "trajectory_id": "schema_013626_s3_q6_ff92612659#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted the invented column provider_type right after describing payment_methods (real column: provider)."
+    },
+    {
+      "trajectory_id": "schema_012029_s2_q2_e8456d05f8#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Counted tasks per creator instead of per profile, then submitted a query on invented table 'personnel'."
+    },
+    {
+      "trajectory_id": "schema_005185_s1_q3_e6b6838b8e#s0",
+      "scored_outcome": "failure",
+      "label": "correct but scorer too strict",
+      "explanation": "Right 43 distinct emails; the reference adds ORDER BY email, which the question does not ask for, and the scorer then requires that order."
+    },
+    {
+      "trajectory_id": "schema_019258_s1_q6_2b068cbc0d#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Invented columns and repeated failing queries; never submitted."
+    },
+    {
+      "trajectory_id": "schema_017810_s0_q4_a2775e0f42#s0",
+      "scored_outcome": "failure",
+      "label": "correct but scorer too strict",
+      "explanation": "Borderline. Right boats, totals, filter and order, identified by boat ID; the reference also includes the boat name, which the question does not explicitly request."
+    },
+    {
+      "trajectory_id": "schema_009274_s2_q4_b717dd85ba#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Rescaled the totals to millions and dropped the group labels, so the answer cannot say which group received more."
+    },
+    {
+      "trajectory_id": "schema_017390_s3_q6_d545c89151#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Queried an invented table 'user' repeatedly; never submitted."
+    },
+    {
+      "trajectory_id": "schema_009267_s1_q0_ee2cf05cad#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Wrote an incomplete query with invented columns; never submitted."
+    },
+    {
+      "trajectory_id": "schema_015324_s0_q7_1cfa1d3526#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Returned the three latest 'OK' rows instead of the latest record per metric."
+    },
+    {
+      "trajectory_id": "schema_016301_s1_q2_68cd29b0cf#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Divided the budget by 100 and rounded (91.0 vs 9078.32), likely the shop tasks' money-in-cents habit; employer ID right."
+    },
+    {
+      "trajectory_id": "schema_019135_s3_q6_a6fbe6de21#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Used invented column derived_yn (real: derivated_yn) after describing the table twice; also missed the evolved filter."
+    },
+    {
+      "trajectory_id": "schema_006408_s1_q1_209ff67d9b#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Wrong table (hourly_views, not hourly_analytics) and matched hour_start exactly to a date, giving NULL."
+    },
+    {
+      "trajectory_id": "schema_020392_s2_q4_f74fdceb69#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    },
+    {
+      "trajectory_id": "schema_004909_s1_q0_7705aebee1#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    },
+    {
+      "trajectory_id": "schema_012542_s1_q0_da8e99f7c2#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    },
+    {
+      "trajectory_id": "schema_004891_s1_q0_ad0fa11564#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    },
+    {
+      "trajectory_id": "schema_009630_s2_q0_a2da04280f#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    },
+    {
+      "trajectory_id": "schema_011654_s2_q1_f0e6046091#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    },
+    {
+      "trajectory_id": "schema_013801_s1_q5_0f985b19ec#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    },
+    {
+      "trajectory_id": "schema_015224_s1_q1_373e54f1d0#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    },
+    {
+      "trajectory_id": "schema_005839_s1_q2_81edd8f9ef#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    },
+    {
+      "trajectory_id": "schema_010738_s2_q0_1036451f47#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Inspected the table, ran the query, submitted it; result matches gold. Simple single-table filter."
+    }
+  ],
+  "allowed_labels": [
+    "really wrong",
+    "correct but scorer too strict",
+    "lucky pass",
+    "correct and scorer agrees"
+  ],
+  "scores_changed": false,
+  "audit_status": "labelled",
+  "reader": "Claude (Opus 5.5) in the local Claude Code session, 2026-11-07; not a human reviewer"
+}

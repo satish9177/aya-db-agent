@@ -1,0 +1,170 @@
+{
+  "model": {
+    "registration_id": "dev-baselines-sql-20261107-01",
+    "registration_sha256": "53049d18e68d5645e3a656e63a00232b6fe8ce86c49f2ee55979e02d89410ee9",
+    "job_id": "6aef6392e6320c66fad617ba",
+    "step": "dev-base-nf4",
+    "adapter": null,
+    "model": "CohereLabs/tiny-aya-global",
+    "revision": "af89d219b53ed9b13b8a4645f9c8028973510324"
+  },
+  "metrics_sha256": "bc78d3ffab86c90314fac5b4b3182297ef80f2d430cf77bb4b5ce7062054636c",
+  "seed": 42,
+  "coverage": {
+    "failure": {
+      "available": 93,
+      "requested": 20,
+      "selected": 20,
+      "shortfall": 0
+    },
+    "success": {
+      "available": 2,
+      "requested": 10,
+      "selected": 2,
+      "shortfall": 8
+    }
+  },
+  "selected": [
+    {
+      "trajectory_id": "schema_013867_s3_q0_8e4c601e9f#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Guessed a table named after the question text; got the real table list, then stopped with an empty reply."
+    },
+    {
+      "trajectory_id": "schema_003985_s2_q0_d0bc21c064#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Guessed table 'documents'; replied in text that it does not exist although 'document' was listed; no query."
+    },
+    {
+      "trajectory_id": "schema_010378_s3_q2_c32aa3b8b2#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Guessed 'auth_tokens'; stopped with an empty reply although 'tokens' was listed."
+    },
+    {
+      "trajectory_id": "schema_000552_s0_q0_118d70db6b#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted a query on invented tables (municipal_employees, vendor_portal_access) without inspecting anything."
+    },
+    {
+      "trajectory_id": "schema_015224_s1_q1_373e54f1d0#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Guessed 'migrations'; stopped although Audit_Log was listed."
+    },
+    {
+      "trajectory_id": "schema_013851_s0_q5_37cfb57144#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted invented columns (signature_date, player_id) and no per-player MAX; the query fails."
+    },
+    {
+      "trajectory_id": "schema_004891_s1_q0_ad0fa11564#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Guessed a table, then claimed in text that a column is missing without describing it; no query."
+    },
+    {
+      "trajectory_id": "schema_006408_s1_q1_209ff67d9b#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Queried an invented table page_views and stopped after the error."
+    },
+    {
+      "trajectory_id": "schema_010053_s0_q1_929e64e354#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Described the right table, then wrote SQL as plain text instead of running or submitting it."
+    },
+    {
+      "trajectory_id": "schema_008477_s3_q2_98f1669c38#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted the invented column job_post_application_id (real: application_id); the query fails."
+    },
+    {
+      "trajectory_id": "schema_010738_s2_q0_1036451f47#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Queried an invented table 'views' and stopped after the error."
+    },
+    {
+      "trajectory_id": "schema_011586_s0_q5_cc9eec947d#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted a query on invented tables vendor_contract/emergency_contact after that exact error."
+    },
+    {
+      "trajectory_id": "schema_017390_s3_q6_d545c89151#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Never submitted; its last of four calls failed. Its fallback score passed by luck: the first query ignores comment_reply, but all 13 access_log users also posted replies."
+    },
+    {
+      "trajectory_id": "schema_005140_s0_q0_e4a52ddac5#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted against invented table 'tasks' after the error listed 'Task'."
+    },
+    {
+      "trajectory_id": "schema_014030_s1_q1_09b0b33e3e#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted on an invented 'users' table with invented columns, without inspecting anything."
+    },
+    {
+      "trajectory_id": "schema_013801_s1_q5_0f985b19ec#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Described the right table, then wrote SQL as plain text instead of running or submitting it."
+    },
+    {
+      "trajectory_id": "schema_013804_s2_q0_eb2da71b7d#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted on invented table 'orders' after that error (real table: 'orde')."
+    },
+    {
+      "trajectory_id": "schema_017264_s0_q0_9867c8e66e#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted on invented table 'users' after the error listed the real tables."
+    },
+    {
+      "trajectory_id": "schema_019258_s0_q2_e1bd53cf10#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted invented table and column names without inspecting anything."
+    },
+    {
+      "trajectory_id": "schema_011654_s2_q1_f0e6046091#s0",
+      "scored_outcome": "failure",
+      "label": "really wrong",
+      "explanation": "Submitted the same query on invented table ping_tests right after it failed."
+    },
+    {
+      "trajectory_id": "schema_021326_s2_q0_f7efa45d81#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "After a failed guess listed EventRecord, submitted the reference query exactly; the column names were given in the question. Correct, though it never checked the columns."
+    },
+    {
+      "trajectory_id": "schema_009844_s2_q1_0ea169c674#s0",
+      "scored_outcome": "success",
+      "label": "correct and scorer agrees",
+      "explanation": "Described author, ran the lookup, submitted it; result matches gold."
+    }
+  ],
+  "allowed_labels": [
+    "really wrong",
+    "correct but scorer too strict",
+    "lucky pass",
+    "correct and scorer agrees"
+  ],
+  "scores_changed": false,
+  "audit_status": "labelled",
+  "reader": "Claude (Opus 5.5) in the local Claude Code session, 2026-11-07; not a human reviewer"
+}

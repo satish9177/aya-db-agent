@@ -1,0 +1,33 @@
+{
+  "frozen": true,
+  "frozen_on": "2026-11-10",
+  "amendment": "experiments/sqale-sft/AMENDMENT-14-final-b.md",
+  "basis": "dev strict on the same 95 effective dev tasks only (amendment 11 rule: B joins if >= 38/95); no final, BIRD or retention result for B was seen",
+  "dev_strict": {
+    "base": 2,
+    "a1500": 37,
+    "aplus": 36,
+    "b": 40
+  },
+  "models": [
+    {
+      "name": "b",
+      "role": "self-training model B, qualified on dev (40/95); submitted model",
+      "model": "CohereLabs/tiny-aya-global",
+      "model_revision": "af89d219b53ed9b13b8a4645f9c8028973510324",
+      "adapter_sha256": "90b04823368f50d6ef5ce85c171fffff317b11a3bf43a591cf3952f01b076837",
+      "checkpoint_step": 40,
+      "registration_sha256": "154f26224c9c4424949ded201cca00d2f32d629ff58619c3619dffe8882f2a6c",
+      "job_id": "6af2d8baab34849891aae46b"
+    }
+  ],
+  "already_evaluated": {
+    "base": "experiments/sql-final-v1 (not re-run)",
+    "a1500": "experiments/sql-final-v1 (not re-run)"
+  },
+  "not_selected": {
+    "aplus": "control, never a finalist (amendment 11)"
+  },
+  "submitted_model": "b (fixed from dev before any B final result; amendment 14)",
+  "tools": "original SQLTools (no tool_feedback)"
+}

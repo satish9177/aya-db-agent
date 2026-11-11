@@ -1,0 +1,71 @@
+{
+  "registration_id": "g0-sql-agenttune-20261107-01",
+  "registration_sha256": "84799ec8cbdd3a57602b09084e3bf8aec1f82f572b5baabeb71a5d51828c8c81",
+  "commit": "413dff8ce056d291d9a6339f4eb5547873143192",
+  "job_id": "6aef3ba90e0338d1bb835c85",
+  "account": "hf-user",
+  "hardware": "t4-small",
+  "outcome": "FAIL_CUDA_OOM_FIRST_FORWARD",
+  "job_status": "ERROR",
+  "created_at": "2026-11-07 14:54:33.496000+00:00",
+  "started_at": "2026-11-07 14:56:35.932000+00:00",
+  "finished_at": "2026-11-07 14:58:52.592000+00:00",
+  "provider_durations": {
+    "scheduling_secs": 122,
+    "running_secs": 136,
+    "total_secs": 259
+  },
+  "running_seconds_exact": 136.66,
+  "train_step_seconds": 70.56742269900002,
+  "completed_optimizer_steps": 0,
+  "inference_episodes": 0,
+  "peak_gpu_memory_bytes": null,
+  "oom_snapshot_gib": {
+    "device_total": 14.74,
+    "device_free": 2.31,
+    "process_in_use": 12.42,
+    "torch_allocated": 11.72,
+    "failed_allocation": 3.98
+  },
+  "oom_torch_reserved_unallocated_mib": 591.85,
+  "cost": {
+    "price_usd_per_minute": 0.006667,
+    "running_time_prorated_usd": 0.015185203666666668,
+    "running_time_whole_minute_estimate_usd": 0.020001,
+    "invoice_charge_usd": null,
+    "actual_invoice_unavailable": true,
+    "storage_charge_usd": null
+  },
+  "checks": {
+    "expected_account_source_revision_private_upload": "PASS",
+    "cuda_and_nf4_model_load": "PASS",
+    "runtime_oracles_4": "PASS",
+    "agenttune_factory_membership_masks_4072_input_431_target": "PASS",
+    "three_finite_optimizer_steps": "FAIL_OOM_AT_STEP_0",
+    "checkpoint_2_optimizer_resume": "NOT_RUN",
+    "checkpoint_3_tensor_reload": "NOT_RUN",
+    "finite_inference_base_pilot_temporary_adapter": "NOT_RUN",
+    "inference_generation_all_conditions": "NOT_RUN",
+    "auditkit_score_agreement": "NOT_RUN"
+  },
+  "no_retry": true,
+  "other_paid_jobs_started": 0,
+  "registration_unchanged": true,
+  "temporary_adapter_adopted": false,
+  "stage_forecasts": {
+    "500": {
+      "train_input_tokens_two_passes": 1694130,
+      "train_targets_two_passes": 214762,
+      "max_train_input": 3849,
+      "completed_training_cost_estimate_usd": null,
+      "reason": "No completed optimizer update or successful throughput measurement; G0 compatibility failed"
+    },
+    "1500": {
+      "train_input_tokens_two_passes": 5369570,
+      "train_targets_two_passes": 661484,
+      "max_train_input": 3891,
+      "completed_training_cost_estimate_usd": null,
+      "reason": "No completed optimizer update or successful throughput measurement; G0 compatibility failed"
+    }
+  }
+}

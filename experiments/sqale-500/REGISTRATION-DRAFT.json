@@ -1,0 +1,165 @@
+{
+  "id": "a500-sql-20261107-draft-01",
+  "status": "SUPERSEDED_BY_RUNNABLE_REGISTRATIONS",
+  "runnable": false,
+  "reason": "G0-02 passed. Amendment 7 turns this draft into two exact runnable registrations (A500 training plus its dev screen; Base/Pilot dev screens in parallel). Neither is approved yet.",
+  "format": "sql-submit-v1",
+  "scorer_policy": "table-read-v1",
+  "expected_account": "hf-user",
+  "approval": false,
+  "uploads_authorized": false,
+  "jobs_authorized": false,
+  "model_config": {
+    "model": "CohereLabs/tiny-aya-global",
+    "model_revision": "af89d219b53ed9b13b8a4645f9c8028973510324",
+    "tokenizer": "data/sqale/tokenizer",
+    "dtype": "float16",
+    "quantization": "nf4-double-quant",
+    "rank": 16,
+    "alpha": 32,
+    "dropout": 0.05,
+    "max_input_tokens": 4096,
+    "context_tokens": 8192,
+    "max_new_tokens": 512,
+    "tool_steps": 8
+  },
+  "planned_training": {
+    "episodes": "data/sqale/data-build-v3/train-500.episodes.jsonl",
+    "episodes_sha256": "b34bbd824142b955f02375deb26bf1d09e75107c425feb16180e2b6d2818fe3c",
+    "eligible_source_examples": 500,
+    "training_examples": 475,
+    "validation_examples": 25,
+    "seed": 42,
+    "validation_share": 0.05,
+    "epochs": 2,
+    "batch_size": 1,
+    "gradient_accumulation": 16,
+    "learning_rate": 0.0002,
+    "max_steps": -1,
+    "save_steps": 10,
+    "keep_checkpoints": 3,
+    "train_inputs_per_pass": 847065,
+    "unique_train_targets_per_pass": 107381,
+    "minimum_verified_b_targets_per_pass": 10739
+  },
+  "planned_dev_screen": {
+    "file": "data/sqale/data-build-v3/dev.tasks.jsonl",
+    "sha256": "db613ff79c2b08753d13f5624ea1950d830aa259b8e35a9f1434409001358716",
+    "eligible_questions": 95,
+    "conditions": [
+      "base-nf4",
+      "existing-pilot-nf4",
+      "a500-nf4"
+    ],
+    "samples_per_question": 1,
+    "temperature": 0,
+    "tool_steps": 8,
+    "max_new_tokens": 512
+  },
+  "retention": {
+    "dev": 40,
+    "mh": 40,
+    "reported_separately": true,
+    "execution_scope_and_cost_to_be_frozen": true
+  },
+  "manual_audit": {
+    "after": "first complete dev screen",
+    "per_model_failures": 20,
+    "per_model_successes": 10,
+    "seed": 42,
+    "shortfall_rule": "all available without replacement",
+    "changes_scores": false,
+    "amendment": "experiments/sqale-sft/AMENDMENT-5-table-reads-and-manual-audit.md"
+  },
+  "g0_measurements": {
+    "job_id": "6aef3ba90e0338d1bb835c85",
+    "runtime_seconds": 136.66,
+    "optimizer_steps": 0,
+    "inference_episodes": 0,
+    "compute_cost_estimate_usd": 0.020001,
+    "invoice_usd": null,
+    "peak_memory_bytes": null,
+    "oom_process_memory_gib": 12.42
+  },
+  "cost_estimates_usd": {
+    "basis": "t4-small $0.4/h; training at 266.5 tokens/s measured on one 4,072-token example; dev episodes at G0-02's per-episode times (3 tasks each). Planning estimates, not caps or measurements.",
+    "a500_training": {
+      "input_tokens_two_passes": 1694130,
+      "hours": 1.77,
+      "usd": 0.71
+    },
+    "a1500_training": {
+      "input_tokens_two_passes": 5369570,
+      "hours": 5.6,
+      "usd": 2.24
+    },
+    "dev_screen_95": {
+      "base_nf4": {
+        "hours": 0.33,
+        "usd": 0.13
+      },
+      "existing_pilot_nf4": {
+        "hours": 2.21,
+        "usd": 0.88
+      },
+      "trained_model_range": {
+        "hours": [
+          0.33,
+          2.21
+        ],
+        "usd": [
+          0.13,
+          0.88
+        ]
+      }
+    },
+    "a500_stage_with_three_condition_dev_screen": {
+      "hours": [
+        4.63,
+        6.5
+      ],
+      "usd": [
+        1.85,
+        2.6
+      ],
+      "excludes": "setup/model loads (~2-3 min per job/step), validation passes (~1 min), retention, storage"
+    },
+    "retention": null,
+    "storage": null,
+    "total_cap": null,
+    "uncertainty": "Throughput comes from 3 updates on one 4,072-token example; the 500 set averages ~1,783 tokens per example (less attention work per token, more fixed per-microbatch overhead). Dev times come from 3 tasks. Treat both as +/-50% until a full stage is measured."
+  },
+  "unresolved_before_registration": [],
+  "excluded_scope": [
+    "BIRD/final evaluation",
+    "Q2 sampling",
+    "A+/B training",
+    "teacher models",
+    "automatic retry",
+    "push/publication"
+  ],
+  "g0_02_measurements": {
+    "job_id": "6aef547de6320c66fad5ff75",
+    "outcome": "PASS",
+    "running_seconds": 670.895,
+    "compute_cost_estimate_usd": 0.080004,
+    "invoice_usd": null,
+    "optimizer_steps": 3,
+    "inference_episodes": 9,
+    "train_tokens_per_second": 266.5,
+    "train_tokens_per_second_basis": "Trainer train_runtime 30.56s for 2 optimizer steps of 4,072 input tokens each, including a checkpoint save after every step (save_steps=1); one example only",
+    "run_peak_allocated_gib": 8.905,
+    "run_peak_reserved_gib": 10.211,
+    "device_total_gib": 14.741,
+    "inference_seconds_per_episode_n3": {
+      "infer-base-nf4": 12.4,
+      "infer-pilot-nf4": 83.58,
+      "infer-checkpoint3-nf4": 26.24
+    }
+  },
+  "g0_measurements_note": "g0_measurements is the failed G0-01 run, kept for history",
+  "superseded_by": [
+    "experiments/sql-a500/REGISTRATION.json",
+    "experiments/sql-dev-baselines/REGISTRATION.json"
+  ]
+}
