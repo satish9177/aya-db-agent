@@ -14,7 +14,8 @@ score is execution-based (no LLM judge), and AuditKIT re-checks it.
   [A1500](https://huggingface.co/satish9177/tiny-aya-sql-agent-a1500)
 - Datasets: [data, trajectories and logs](https://huggingface.co/datasets/satish9177/tiny-aya-sql-agent-data) and
   [BIRD evaluation records](https://huggingface.co/datasets/satish9177/tiny-aya-sql-agent-bird-eval)
-- Write-up: [`submission/WRITEUP.md`](submission/WRITEUP.md)
+- Write-up: [HF Article](https://huggingface.co/blog/satish9177/teaching-tiny-aya-to-query-databases-what-fine-tun)
+  (same text as [`submission/WRITEUP.md`](submission/WRITEUP.md))
 - Abstract: [`submission/ABSTRACT.md`](submission/ABSTRACT.md)
 
 ## Results (final sets, strict)
