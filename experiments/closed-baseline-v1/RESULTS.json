@@ -1,0 +1,150 @@
+{
+  "registration_sha256": "7a1ae8665d9c94c35dd869b8690f33f277c0b41319902de2a03b6a0051779a34",
+  "model_reported": [
+    "gpt-6-luna"
+  ],
+  "dropped_options": [
+    "stop"
+  ],
+  "api_calls": 740,
+  "episodes": 144,
+  "auditkit_agreement": 144,
+  "arms": {
+    "Base": {
+      "strict": 4,
+      "strict_pct": 2.8,
+      "strict_95ci_pct": [
+        1.1,
+        6.9
+      ],
+      "set": 5,
+      "fallback": 4,
+      "submitted": 74,
+      "out_of_steps": 5,
+      "submitted_failed_to_run": 68,
+      "malformed_turns": 38,
+      "fabricated_output_turns": 1,
+      "mean_generations": 1.99
+    },
+    "A1500": {
+      "strict": 45,
+      "strict_pct": 31.2,
+      "strict_95ci_pct": [
+        24.2,
+        39.2
+      ],
+      "set": 51,
+      "fallback": 45,
+      "submitted": 104,
+      "out_of_steps": 39,
+      "submitted_failed_to_run": 1,
+      "malformed_turns": 1,
+      "fabricated_output_turns": 0,
+      "mean_generations": 6.0
+    },
+    "B": {
+      "strict": 44,
+      "strict_pct": 30.6,
+      "strict_95ci_pct": [
+        23.6,
+        38.5
+      ],
+      "set": 51,
+      "fallback": 44,
+      "submitted": 98,
+      "out_of_steps": 46,
+      "submitted_failed_to_run": 0,
+      "malformed_turns": 0,
+      "fabricated_output_turns": 0,
+      "mean_generations": 6.15
+    },
+    "gpt-6-luna": {
+      "strict": 95,
+      "strict_pct": 66.0,
+      "strict_95ci_pct": [
+        57.9,
+        73.2
+      ],
+      "set": 99,
+      "fallback": 39,
+      "submitted": 131,
+      "out_of_steps": 10,
+      "submitted_failed_to_run": 0,
+      "malformed_turns": 38,
+      "fabricated_output_turns": 0,
+      "mean_generations": 5.14
+    }
+  },
+  "paired_vs_B": {
+    "luna_only": 57,
+    "B_only": 6,
+    "p_exact_mcnemar": 1.6395687108330947e-11
+  },
+  "by_shape": {
+    "Base": {
+      "1-table lookup": 4,
+      "1-table aggregate": 0,
+      "two tables": 0,
+      "3+ tables": 0,
+      "multi-step": 0
+    },
+    "A1500": {
+      "1-table lookup": 27,
+      "1-table aggregate": 6,
+      "two tables": 10,
+      "3+ tables": 1,
+      "multi-step": 1
+    },
+    "B": {
+      "1-table lookup": 29,
+      "1-table aggregate": 7,
+      "two tables": 7,
+      "3+ tables": 0,
+      "multi-step": 1
+    },
+    "gpt-6-luna": {
+      "1-table lookup": 31,
+      "1-table aggregate": 13,
+      "two tables": 26,
+      "3+ tables": 13,
+      "multi-step": 12
+    },
+    "n": {
+      "two tables": 44,
+      "1-table lookup": 36,
+      "3+ tables": 19,
+      "multi-step": 32,
+      "1-table aggregate": 13
+    }
+  },
+  "roi": {
+    "luna_api_usd": 0.0678,
+    "luna_usd_per_question": 0.000471,
+    "luna_usd_per_strict_success": 0.000714,
+    "luna_seconds_per_question": 8.1,
+    "b_gpu_usd_by_rate": 1.0948,
+    "b_usd_per_question": 0.007603,
+    "b_usd_per_strict_success": 0.024882,
+    "b_seconds_per_question": 68.4,
+    "b_one_time_build_usd": {
+      "A1500 training + dev screen": 2.36,
+      "Q2 sampling": 9.11,
+      "B training + dev screen": 0.99
+    },
+    "b_one_time_build_total_usd": 12.46,
+    "luna_tokens": {
+      "prompt": 752224,
+      "generated": 29641
+    }
+  },
+  "paired_vs_Base": {
+    "luna_only": 91,
+    "Base_only": 0,
+    "p_exact_mcnemar": 8.077935669463161e-28
+  },
+  "paired_vs_A1500": {
+    "luna_only": 58,
+    "A1500_only": 8,
+    "p_exact_mcnemar": 1.7951476752580547e-10
+  }
+}

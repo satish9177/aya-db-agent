@@ -1,0 +1,123 @@
+{
+  "id": "closed-gpt6luna-sqale-final-20261111-01",
+  "kind": "closed-model-baseline",
+  "status": "DRAFT_AWAITING_EXPLICIT_USER_APPROVAL",
+  "authorization": "Draft only: the user's explicit approval must name this file's SHA256 and covers one run, at most max_cost_usd of API spend",
+  "provider": "openai",
+  "base_url": "https://api.openai.com/v1",
+  "model": "gpt-6-luna",
+  "key_env": "OPENAI_API_KEY",
+  "key_file": "~/.aya-keys/openai.key",
+  "max_tokens_field": "max_completion_tokens",
+  "max_new_tokens": 512,
+  "request_options": {
+    "reasoning_effort": "none",
+    "temperature": 0,
+    "stop": [
+      "}]",
+      "Tool result"
+    ]
+  },
+  "drop_if_rejected": [
+    "temperature",
+    "stop"
+  ],
+  "prices_usd_per_million": {
+    "input": 0.1,
+    "cached_input": 0.01,
+    "output": 0.5,
+    "source": "https://developers.openai.com/api/docs/pricing",
+    "checked": "2026-11-11",
+    "tier": "Standard"
+  },
+  "max_cost_usd": 1.5,
+  "retry_policy": "Transient HTTP errors (408/409/429/5xx, connection) retry the same request up to 5 times. No episode is ever re-run. If the cap or an error stops the run, report what finished.",
+  "tasks": {
+    "path": "data/sqale/data-build-v3/final.tasks.jsonl",
+    "sha256": "b3f54d429b96f074c69841392901b55fc9d6bd224653d4d7df802a7480c8f629",
+    "episodes": 144
+  },
+  "selection": {
+    "path": "experiments/sql-final-b/SELECTION.json",
+    "sha256": "a98813db54c5b11e77fdedb70b0e955fec630696ce0399c51a46cb094c795bcd"
+  },
+  "tokenizer": {
+    "path": "data/sqale/tokenizer",
+    "tokenizer_json_sha256": "2227ea9c52e8afb3f98bfed2679008b275f2664de69dfde174b374389eb0225d",
+    "role": "prompt construction and the 8,192-token length guard, exactly as for Tiny Aya"
+  },
+  "protocol": {
+    "format": "sql-submit-v1",
+    "tools": "original (no error hints)",
+    "tool_steps": 8,
+    "context_tokens": 8192,
+    "temperature": 0.0,
+    "seed": 42,
+    "samples": 1,
+    "scorer_policy": "table-read-v1",
+    "auditkit_agreement_required": true
+  },
+  "out": "runs/closed/closed-gpt6luna-sqale-final-20261111-01/sqale-final",
+  "comparators": [
+    {
+      "name": "Base",
+      "metrics": "remote/hf-sql/hf-user/final-sqale-sql-20261109-01/sqale-final-base/metrics.jsonl",
+      "metrics_sha256": "a6944c0c9f0956a8a02f83169ea4f31b795a37944faf652ea2c941b5e0e4f5ad",
+      "summary_sha256": "08fd3ecd760b6eb426e9f67fcb805377194b0959509f70e5f58239cd32e0379c",
+      "strict": 4,
+      "episodes": 144,
+      "prompt_tokens": 374013,
+      "generated_tokens": 24465,
+      "seconds": 2994.6,
+      "gpu_usd_by_rate": 0.3327
+    },
+    {
+      "name": "A1500",
+      "metrics": "remote/hf-sql/hf-user/final-sqale-sql-20261109-01/sqale-final-a1500/metrics.jsonl",
+      "metrics_sha256": "9628a02e37ea5d310b876c90c8d152d889054ac29ac11675ddf120e11717a778",
+      "summary_sha256": "cb2eccfe0b926c91a899f8ba132ecf7887ad6aed228ec995417b18eafa19f2a8",
+      "strict": 45,
+      "episodes": 144,
+      "prompt_tokens": 1278167,
+      "generated_tokens": 44444,
+      "seconds": 9998.3,
+      "gpu_usd_by_rate": 1.1109
+    },
+    {
+      "name": "B",
+      "metrics": "remote/hf-sql/hf-user/final-b-sqale-sql-20261110-01/sqale-final-b/metrics.jsonl",
+      "metrics_sha256": "782e71ad6b9225f39c0767c166a7931a3a65948872c37e5c7851807b64245e64",
+      "summary_sha256": "ad18290181fe535a51c456938a7d08afa372048e793fb7ba0d89f1c0030b15fa",
+      "strict": 44,
+      "episodes": 144,
+      "prompt_tokens": 1309069,
+      "generated_tokens": 42295,
+      "seconds": 9853.5,
+      "gpu_usd_by_rate": 1.0948
+    }
+  ],
+  "analysis": {
+    "primary": "strict successes of the closed model vs B on the same 144 tasks; exact two-sided McNemar",
+    "secondary": [
+      "set and fallback scores",
+      "ran out of tool steps",
+      "submitted queries that failed to run",
+      "malformed turns",
+      "strict by query shape"
+    ],
+    "roi": "API USD per question and per strict success vs B's T4 USD per question and per strict success (rate $0.40/h); seconds per question; B's one-time training cost reported separately"
+  },
+  "source_sha256": {
+    "src/ayadb/apiengine.py": "aaf0091fc43e34542df7d294b481766f03edb56632ee71d31d9dff48137453f6",
+    "src/ayadb/engine.py": "d8ed2868b64968b6126cf99c4c060c646a7a6385b51afbe530443d03894c257e",
+    "src/ayadb/sqlrunner.py": "e88fffdaca75907e96b4cabfd4f1eb556326028487eb4c1d1ac706172e58a975",
+    "src/ayadb/sqlenv.py": "10ff3982daec30885f9034a5f6f6e6afb204309605e394cc0a221dc5ad611444",
+    "src/ayadb/sqlguard.py": "dbc5b6254d36ae151d09a47720962beeb56bb0cb1c45fca51950f777345f06eb",
+    "src/ayadb/sqlscore.py": "d6ff31ebbb0bf164528c7604c9647fc6066e9e701531108f73e7430a00ad386a",
+    "src/ayadb/runinputs.py": "05c6c1720c112db3a20df2ed85febd13c149c4fda18c9cff1b5957f071f10781",
+    "src/ayadb/protocol.py": "816d0dede8d3553f94179d4a6f8e60394f10680ea61c200d63ce7decfee81792",
+    "scripts/closed_baseline.py": "93737d147485bd6895d1a6da1820f5daea1a8c0bc03f95b952f33d8868f3c86d",
+    "scripts/prepare_closed_baseline.py": "9316c320c219e73fd4eead306225a8e4752b7b5d79b758dfd74b13ed7e05fbf4",
+    "experiments/closed-baseline-v1/PREREGISTRATION.md": "2d49942e4a98296707ce99f6ea466a85c9685ba65066dac0f21bee9e37c1ffe0"
+  }
+}

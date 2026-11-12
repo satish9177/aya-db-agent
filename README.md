@@ -8,16 +8,23 @@ We fine-tuned Tiny Aya Global with QLoRA to answer questions over SQLite databas
 model uses four tools (`list_tables`, `describe_table`, `run_sql`, `submit_sql`) within eight tool steps. Every
 score is execution-based (no LLM judge), and AuditKIT re-checks it.
 
-**Links:** HF model, dataset and write-up are added here at publication.
+**Links:**
+- [HF collection](https://huggingface.co/collections/satish9177/tiny-aya-sql-agent-lexsi-hackathon-track-3-6af56be33215a3e1b8eb8280)
+- Models: [B (submitted)](https://huggingface.co/satish9177/tiny-aya-sql-agent) and
+  [A1500](https://huggingface.co/satish9177/tiny-aya-sql-agent-a1500)
+- Datasets: [data, trajectories and logs](https://huggingface.co/datasets/satish9177/tiny-aya-sql-agent-data) and
+  [BIRD evaluation records](https://huggingface.co/datasets/satish9177/tiny-aya-sql-agent-bird-eval)
+- Write-up: [`submission/WRITEUP.md`](submission/WRITEUP.md)
+- Abstract: [`submission/ABSTRACT.md`](submission/ABSTRACT.md)
 
 ## Results (final sets, strict)
 
-| Set | Base (untuned) | A1500 (SFT) | **B (submitted)** |
-|---|---:|---:|---:|
-| SQaLe final (144, unseen databases) | 2.8% | 31.3% | **30.6%** |
-| BIRD Mini-Dev (493, never trained on) | 0.0% | 1.6% | **1.4%** |
-| Shop retention, dev (40) | 0 | 40 | **40** |
-| Shop retention, multi-hop (40) | 0 | 1 | **0** |
+| Set | Base (untuned) | A1500 (SFT) | **B (submitted)** | gpt-6-luna (closed) |
+|---|---:|---:|---:|---:|
+| SQaLe final (144, unseen databases) | 2.8% | 31.3% | **30.6%** | 66.0% |
+| BIRD Mini-Dev (493, never trained on) | 0.0% | 1.6% | **1.4%** | not run |
+| Shop retention, dev (40) | 0 | 40 | **40** | not run |
+| Shop retention, multi-hop (40) | 0 | 1 | **0** | not run |
 
 - **A1500:** QLoRA SFT on 1,500 verified multi-turn episodes (SQaLe plus shop).
 - **B:** A1500 plus one self-training round on 306 of its own verified answers (rejection-sampling
@@ -31,8 +38,20 @@ score is execution-based (no LLM judge), and AuditKIT re-checks it.
   - error-hint tools, repair demonstrations and self-training did not raise final accuracy;
   - self-training beat its matched control 4-0 on dev (p = 0.125), but gave no final gain.
 
-Details: `experiments/sql-final-v1/RESULTS.md`, `experiments/sql-final-b/RESULTS.md` and
-`experiments/sql-selftrain-v1/RESULTS.md`. All work ran on single T4 GPUs for about $37 of compute.
+- **Closed-model comparison (ROI):** OpenAI's cheapest current model, `gpt-6-luna` (reasoning off),
+  took the same test with identical prompts, tools, eight steps and scoring. It scored 66.0%, solving 25
+  of 51 complex questions where B solves 1.
+  - Cost per correct answer: $0.0007 (API) against B's $0.025 (rented T4, by rate).
+  - B comes close only on simple one-table lookups (29 vs 31 of 36).
+  - B formats tool calls more cleanly (0 malformed turns vs 38).
+
+Details are in:
+- `experiments/sql-final-v1/RESULTS.md`
+- `experiments/sql-final-b/RESULTS.md`
+- `experiments/sql-selftrain-v1/RESULTS.md`
+- `experiments/closed-baseline-v1/RESULTS.md`
+
+All work ran on single T4 GPUs for about $37 of compute, plus $0.07 of API calls.
 
 ## What is in this repo
 
@@ -42,6 +61,8 @@ Details: `experiments/sql-final-v1/RESULTS.md`, `experiments/sql-final-b/RESULTS
 | `scripts/sql_job.py` | registered GPU runs: `plan`, `preflight`, `launch`, `status`, `pull` (see `docs/sql-runner.md`) |
 | `scripts/prepare_*.py` | build each run's registration locally |
 | `experiments/` | the plan written before each run (`REGISTRATION.json`), amendments, and results (`RESULTS.md`, `RESULTS.json`) |
+| `src/ayadb/apiengine.py`, `scripts/closed_baseline.py` | closed-model baseline: the same protocol through an OpenAI-compatible API, with a spending cap |
+| `submission/` | write-up and abstract |
 | `docs/`, `reports/` | runner and data-build guides, source and licence notes, reviews |
 | `tests/` | local tests |
 
@@ -299,3 +320,10 @@ sampling), `trajectories.jsonl` (AgentTune records), `metrics.jsonl`, `auditkit.
 
 Code: Apache-2.0. Tiny Aya: CC-BY-NC-4.0 (Cohere Labs). AgentTune (LSAL v1.1) and AuditKIT
 (LSAL-1.2) are source-available, non-commercial.
+
+**Closed-model comparison (2026-11-12, [results](experiments/closed-baseline-v1/RESULTS.md)), approved and
+run once, $0.068.** OpenAI's cheapest current model, `gpt-6-luna` (reasoning off), took B's exact test:
+the same 144 SQaLe final questions, prompts, tools, eight steps and strict scoring. It scored **95/144
+(66.0%)** against B's 44. It solved 25 of 51 complex questions (B: 1), and it cost $0.0007 per correct answer
+against B's $0.025 on a rented T4. B comes close only on simple one-table lookups (29 vs 31 of 36), and it
+follows the tool format more cleanly (0 malformed turns vs 38).
